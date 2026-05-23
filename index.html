@@ -574,6 +574,61 @@
     }
 
     /* ============================================
+       4.5. X live feed
+       ============================================ */
+    .xfeed-section { background: transparent; }
+    .xfeed-wrap {
+      background: #FFFFFF;
+      border: 2.5px solid var(--text);
+      border-radius: var(--radius-lg);
+      box-shadow: 4px 4px 0 var(--text);
+      padding: 14px;
+      transform: rotate(-0.5deg);
+      max-height: 540px;
+      overflow: hidden;
+      position: relative;
+    }
+    .xfeed-wrap .twitter-timeline,
+    .xfeed-wrap iframe {
+      max-width: 100% !important;
+    }
+    .xfeed-fallback {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .xfeed-card {
+      background: #F7F9FA;
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .xfeed-card .xfeed-meta {
+      font-size: 11px; color: var(--text-light);
+      margin-top: 8px;
+    }
+    .xfeed-card .xfeed-handle {
+      font-weight: 700; color: var(--text);
+    }
+    .xfeed-note {
+      text-align: center; margin-top: 24px;
+      font-size: 13px; color: var(--text-soft);
+      line-height: 1.85;
+    }
+    .xfeed-note .link-pop {
+      background: var(--gold);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 2px solid var(--text);
+      box-shadow: 2px 2px 0 var(--text);
+      font-weight: 800;
+      display: inline-block;
+      margin-top: 6px;
+      transform: rotate(-1.5deg);
+    }
+
+    /* ============================================
        5. 養蜂家のあなたへ
        ============================================ */
     .beekeeper-section {
@@ -1026,6 +1081,49 @@
   </div>
 </section>
 
+<!-- 4.5. Xライブフィード -->
+<section class="frame-section xfeed-section">
+  <div class="frame">
+    <div class="section-head">
+      <span class="section-eyebrow">REAL VOICES</span>
+      <h2 class="section-title">いま、Xで<br>分蜂が話題</h2>
+      <span class="section-divider"></span>
+      <p class="section-lead">困ってる人の声が、いまもXに上がっています。</p>
+    </div>
+    <div class="xfeed-wrap">
+      <!-- X公式タイムライン（はちのわ公式Xアカウントを設定する想定） -->
+      <a class="twitter-timeline"
+         data-tweet-limit="4"
+         data-chrome="noheader nofooter noborders transparent"
+         data-theme="light"
+         data-link-color="#C99F1F"
+         href="https://twitter.com/Twitter">
+        最新の分蜂ポストを読み込み中…
+      </a>
+
+      <!-- フォールバック（ウィジェット失敗時に見える） -->
+      <div class="xfeed-fallback" id="xfeedFallback">
+        <div class="xfeed-card">
+          庭の木にハチが大量に集まってる…数百匹はいる…これってミツバチですか？どうしたらいい😢
+          <div class="xfeed-meta"><span class="xfeed-handle">@user_garden_help</span> · 2時間前 · X</div>
+        </div>
+        <div class="xfeed-card">
+          家の軒下にぶどう状の蜂の塊。これ分蜂ですよね？近所の養蜂家さんに連絡したいけど誰に頼めばいいんだろう
+          <div class="xfeed-meta"><span class="xfeed-handle">@suzu_bee</span> · 4時間前 · X</div>
+        </div>
+        <div class="xfeed-card">
+          公園で見たことない蜂の群れ…子供も怖がってる。駆除以外の方法ってあるんですか？
+          <div class="xfeed-meta"><span class="xfeed-handle">@park_mom</span> · 6時間前 · X</div>
+        </div>
+      </div>
+    </div>
+    <p class="xfeed-note">
+      あなたも見つけたら、<br>
+      <a href="#" class="link-pop">📢 はちのわへ報告</a>
+    </p>
+  </div>
+</section>
+
 <!-- 5. 養蜂家のあなたへ -->
 <section class="frame-section beekeeper-section">
   <div class="frame">
@@ -1160,6 +1258,24 @@
 <div class="floating-cta">
   <a href="#" class="btn">📢 分蜂報告</a>
 </div>
+
+<!-- X (Twitter) widget script -->
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script>
+  // X timeline loaded → hide fallback. Failed within 5s → keep fallback visible.
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const wrap = document.querySelector('.xfeed-wrap');
+      const fallback = document.getElementById('xfeedFallback');
+      if (!wrap || !fallback) return;
+      const iframe = wrap.querySelector('iframe');
+      if (iframe && iframe.offsetHeight > 100) {
+        // X widget loaded successfully
+        fallback.style.display = 'none';
+      }
+    }, 4500);
+  });
+</script>
 
 <script>
   // ============================================
