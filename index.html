@@ -267,28 +267,30 @@
        ============================================ */
     .floating-cta {
       position: fixed;
-      bottom: 16px; left: 50%;
-      transform: translateX(-50%);
-      display: flex; gap: 10px;
-      background: #FFF;
-      padding: 10px;
-      border-radius: 999px;
-      box-shadow: 4px 4px 0 var(--text);
+      bottom: 18px; right: 18px;
       z-index: 100;
-      border: 2.5px solid var(--text);
-      width: calc(100% - 32px);
-      max-width: 460px;
     }
     .floating-cta .btn {
-      flex: 1; padding: 12px 8px; font-size: 13px;
-      box-shadow: 2px 2px 0 var(--text);
+      padding: 16px 22px;
+      font-size: 14px;
+      font-weight: 900;
+      background: var(--gold);
+      color: var(--text);
+      border: 2.5px solid var(--text);
+      box-shadow: 4px 4px 0 var(--text);
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+    }
+    .floating-cta .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--text);
     }
     @media (min-width: 960px) {
       .floating-cta { display: none; }
       body { padding-bottom: 0; }
     }
     @media (max-width: 959px) {
-      body { padding-bottom: 90px; }
+      body { padding-bottom: 100px; }
     }
 
     /* ============================================
@@ -1154,10 +1156,9 @@
   </div>
 </footer>
 
-<!-- Floating CTA for mobile only -->
+<!-- Floating CTA for mobile only (右下に常時表示) -->
 <div class="floating-cta">
-  <a href="#" class="btn btn-primary">📢 分蜂を報告</a>
-  <a href="#" class="btn btn-green">🐝 養蜂家登録</a>
+  <a href="#" class="btn">📢 分蜂報告</a>
 </div>
 
 <script>
