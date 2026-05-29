@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>はちのわ クラファン検討資料</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+      background: #fafaf8;
+      color: #222;
+      line-height: 1.8;
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e4;
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header .logo { font-size: 20px; font-weight: 700; letter-spacing: .05em; }
+    header .tag {
+      font-size: 11px;
+      background: #f0ede6;
+      color: #888;
+      padding: 3px 10px;
+      border-radius: 100px;
+      letter-spacing: .08em;
+    }
+    header .date { margin-left: auto; font-size: 12px; color: #aaa; }
+
+    .toc {
+      background: #fff;
+      border: 1px solid #e8e8e4;
+      border-radius: 12px;
+      padding: 24px 32px;
+      margin: 40px 48px 0;
+      max-width: 900px;
+    }
+    .toc h2 { font-size: 13px; color: #888; letter-spacing: .1em; margin-bottom: 12px; }
+    .toc ol { padding-left: 20px; }
+    .toc li { margin: 6px 0; }
+    .toc a { color: #c8a86b; text-decoration: none; font-size: 14px; }
+    .toc a:hover { text-decoration: underline; }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 48px 100px;
+    }
+
+    section { margin-bottom: 64px; }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: .15em;
+      color: #aaa;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #f0ede6;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f0ede6;
+    }
+
+    h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: .08em;
+      margin: 24px 0 10px;
+    }
+
+    /* タイトル案カード */
+    .title-cards { display: flex; flex-direction: column; gap: 16px; }
+
+    .title-card {
+      border: 1px solid #e8e8e4;
+      border-radius: 12px;
+      padding: 24px 28px;
+      background: #fff;
+      cursor: pointer;
+      transition: border-color .2s, box-shadow .2s;
+      position: relative;
+    }
+    .title-card:hover { border-color: #c8a86b; box-shadow: 0 2px 12px rgba(200,168,107,.12); }
+    .title-card.selected { border-color: #c8a86b; background: #fffdf7; }
+
+    .title-card .badge {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #c8a86b;
+      letter-spacing: .05em;
+    }
+
+    .title-card .title-text {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .title-card .title-note {
+      font-size: 13px;
+      color: #888;
+      line-height: 1.7;
+    }
+
+    /* リターン表 */
+    .return-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .return-table th {
+      background: #f7f5f0;
+      font-size: 11px;
+      letter-spacing: .08em;
+      color: #888;
+      text-align: left;
+      padding: 10px 16px;
+      font-weight: 600;
+    }
+    .return-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0ede6;
+      vertical-align: top;
+    }
+    .return-table tr:last-child td { border-bottom: none; }
+    .return-table tr:hover td { background: #fffdf7; }
+
+    .price {
+      font-weight: 700;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+    .price.honey { color: #c8a86b; }
+    .price.experience { color: #6b9ec8; }
+    .price.support { color: #6bc8a8; }
+    .price.plain { color: #888; }
+
+    .cost-note { font-size: 12px; color: #aaa; margin-top: 4px; }
+
+    /* 代表紹介 */
+    .profile-draft {
+      background: #fff;
+      border: 1px solid #e8e8e4;
+      border-radius: 12px;
+      padding: 32px;
+    }
+    .profile-draft .label {
+      font-size: 11px;
+      letter-spacing: .12em;
+      color: #c8a86b;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .profile-draft p {
+      font-size: 14px;
+      line-height: 2;
+      color: #333;
+      margin-bottom: 16px;
+    }
+    .profile-draft p:last-child { margin-bottom: 0; }
+
+    .edit-note {
+      background: #fff8ee;
+      border-left: 3px solid #c8a86b;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #888;
+      border-radius: 0 6px 6px 0;
+      margin-top: 16px;
+    }
+
+    /* 目標金額 */
+    .goals {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .goal-card {
+      background: #fff;
+      border: 1px solid #e8e8e4;
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .goal-card .goal-label { font-size: 11px; color: #aaa; letter-spacing: .1em; margin-bottom: 8px; }
+    .goal-card .goal-amount { font-size: 28px; font-weight: 700; color: #222; }
+    .goal-card .goal-unit { font-size: 14px; color: #aaa; margin-left: 4px; }
+    .goal-card .goal-desc { font-size: 13px; color: #888; margin-top: 10px; line-height: 1.7; }
+
+    .goal-card.first { border-color: #c8a86b; }
+    .goal-card.stretch { border-color: #ddd; }
+
+    /* 備考 */
+    .memo {
+      background: #fff;
+      border: 1px solid #e8e8e4;
+      border-radius: 12px;
+      padding: 24px 28px;
+    }
+    .memo ul { padding-left: 20px; }
+    .memo li { font-size: 14px; color: #555; margin: 8px 0; }
+
+    .tag-badge {
+      display: inline-block;
+      font-size: 11px;
+      background: #f0ede6;
+      color: #888;
+      padding: 2px 8px;
+      border-radius: 100px;
+      margin-right: 4px;
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 16px 20px; }
+      main { padding: 24px 20px 60px; }
+      .toc { margin: 24px 20px 0; }
+      .goals { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="logo">🐝 はちのわ</span>
+  <span class="tag">クラファン検討資料</span>
+  <span class="date">2026.05</span>
+</header>
+
+<div class="toc" style="margin-left: auto; margin-right: auto; max-width: 900px; margin-top: 40px;">
+  <h2>INDEX</h2>
+  <ol>
+    <li><a href="#title">01 — タイトル案（3案）</a></li>
+    <li><a href="#goal">02 — 目標金額</a></li>
+    <li><a href="#return">03 — リターン設計</a></li>
+    <li><a href="#profile">04 — 代表紹介文（たたき台）</a></li>
+    <li><a href="#summary">05 — プロジェクト概要文（400字）</a></li>
+    <li><a href="#story">06 — 本文ストーリー（たたき台）</a></li>
+    <li><a href="#memo">07 — 確認事項</a></li>
+  </ol>
+</div>
+
+<main>
+
+  <!-- 01 タイトル -->
+  <section id="title">
+    <div class="section-label">01</div>
+    <h2>タイトル案</h2>
+    <p style="font-size:13px; color:#888; margin-bottom:20px;">Readyforのタイトルは60文字以内が推奨。3案から選ぶか、組み合わせて決める。</p>
+
+    <div class="title-cards">
+      <div class="title-card">
+        <span class="badge">案 A</span>
+        <div class="title-text">毎年春に繰り返される"分蜂戦争"をなくしたい。<br>蜜蜂と人をつなぐマッチングサービス「はちのわ」</div>
+        <div class="title-note">
+          SNSで見ている人の共感を狙う。「分蜂戦争」というワードでピンとくる層に刺さる。<br>
+          課題→解決策の流れが明確。
+        </div>
+      </div>
+
+      <div class="title-card">
+        <span class="badge">案 B</span>
+        <div class="title-text">駆除じゃなく、保護を選べる社会へ。<br>全国の分蜂をつなぐネットワーク「はちのわ」を作りたい</div>
+        <div class="title-note">
+          「保護 vs 駆除」という価値観の対比が明快。社会的なメッセージとして強い。<br>
+          Readyforの社会貢献系支援者に響きやすい。
+        </div>
+      </div>
+
+      <div class="title-card">
+        <span class="badge">案 C</span>
+        <div class="title-text">「近くだったら保護するのに」を実現したい。<br>分蜂レスキューマッチング「はちのわ」始動</div>
+        <div class="title-note">
+          SNSで実際に使われているセリフをそのまま引用。リアリティがある。<br>
+          「始動」という言葉でプロジェクトの始まりを演出。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 目標金額 -->
+  <section id="goal">
+    <div class="section-label">02</div>
+    <h2>目標金額</h2>
+
+    <div class="goals">
+      <div class="goal-card first">
+        <div class="goal-label">FIRST GOAL</div>
+        <div class="goal-amount">110<span class="goal-unit">万円</span></div>
+        <div class="goal-desc">
+          サイト公開・LINE通知・基本マッチング機能<br>
+          実収 約94.6万円（Readyfor手数料14%）
+        </div>
+      </div>
+      <div class="goal-card stretch">
+        <div class="goal-label">STRETCH GOAL</div>
+        <div class="goal-amount">160<span class="goal-unit">万円</span></div>
+        <div class="goal-desc">
+          はちみつECページ・PR強化・<br>ミツバチサミット旅費（干場先生招致含む）
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px; background:#fff; border:1px solid #e8e8e4; border-radius:12px; padding:20px 24px;">
+      <h3>内訳（First Goal 110万円）</h3>
+      <table style="width:100%; font-size:13px; border-collapse:collapse;">
+        <tr>
+          <td style="padding:8px 0; border-bottom:1px solid #f0ede6; color:#555;">制作費（サイト・システム）</td>
+          <td style="padding:8px 0; border-bottom:1px solid #f0ede6; text-align:right; font-weight:600;">35万円</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0; border-bottom:1px solid #f0ede6; color:#555;">ブランディング・ロゴ整備</td>
+          <td style="padding:8px 0; border-bottom:1px solid #f0ede6; text-align:right; font-weight:600;">5万円</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0; border-bottom:1px solid #f0ede6; color:#555;">利用規約・免責文書</td>
+          <td style="padding:8px 0; border-bottom:1px solid #f0ede6; text-align:right; font-weight:600;">5万円</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0; border-bottom:1px solid #f0ede6; color:#555;">はちみつリターン仕入・梱包・発送（150本想定）</td>
+          <td style="padding:8px 0; border-bottom:1px solid #f0ede6; text-align:right; font-weight:600;">28万円</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0; border-bottom:1px solid #f0ede6; color:#555;">初年度運営費（サーバー・LINE・ドメイン）</td>
+          <td style="padding:8px 0; border-bottom:1px solid #f0ede6; text-align:right; font-weight:600;">12万円</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0; border-bottom:1px solid #f0ede6; color:#555;">Readyfor手数料（14%）</td>
+          <td style="padding:8px 0; border-bottom:1px solid #f0ede6; text-align:right; font-weight:600;">約15万円</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0; color:#555;">予備費（バッファ10%）</td>
+          <td style="padding:8px 0; text-align:right; font-weight:600;">10万円</td>
+        </tr>
+        <tr style="background:#f7f5f0;">
+          <td style="padding:10px 8px; font-weight:700;">合計</td>
+          <td style="padding:10px 8px; text-align:right; font-weight:700; font-size:16px;">110万円</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 03 リターン -->
+  <section id="return">
+    <div class="section-label">03</div>
+    <h2>リターン設計案</h2>
+    <p style="font-size:13px; color:#888; margin-bottom:20px;">
+      はちみつ現物は必須。かえるやはちみつとして提供。品種・量はエマさんの在庫状況を確認して確定する。
+    </p>
+
+    <table class="return-table">
+      <thead>
+        <tr>
+          <th>金額</th>
+          <th>内容</th>
+          <th>原価目安</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="price plain">1,000円</span></td>
+          <td>
+            <strong>応援コース</strong><br>
+            お礼メール＋活動報告（随時）
+          </td>
+          <td>ほぼ0円</td>
+          <td>気軽に支援できる入口</td>
+        </tr>
+        <tr>
+          <td><span class="price honey">3,000円</span></td>
+          <td>
+            <strong>はちみつ小</strong><br>
+            かえるやはちみつ 100g × 1本
+          </td>
+          <td class="cost-note">約600〜800円</td>
+          <td>品種はエマさんが旬のものを選択</td>
+        </tr>
+        <tr>
+          <td><span class="price honey">5,000円</span></td>
+          <td>
+            <strong>はちみつ中</strong><br>
+            かえるやはちみつ 200g × 1本
+          </td>
+          <td class="cost-note">約1,000円</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><span class="price honey">10,000円</span></td>
+          <td>
+            <strong>はちみつ詰め合わせ</strong><br>
+            かえるやはちみつ 季節の3種セット（100g × 3本）<br>
+            <span style="font-size:12px; color:#aaa;">生きカエル・よみガエル・季節のはちみつ</span>
+          </td>
+          <td class="cost-note">約2,500円</td>
+          <td>ギフトにもなる主力リターン</td>
+        </tr>
+        <tr>
+          <td><span class="price experience">30,000円</span></td>
+          <td>
+            <strong>採蜜体験</strong><br>
+            エマさんの養蜂場での採蜜体験 + はちみつ200g<br>
+            <span style="font-size:12px; color:#aaa;">宮の森・北の沢・玉翠園屋上のいずれか・要日程調整</span>
+          </td>
+          <td class="cost-note">体験提供のみ</td>
+          <td>上限：10名程度<br>都市型養蜂の希少体験</td>
+        </tr>
+        <tr>
+          <td><span class="price support">50,000円</span></td>
+          <td>
+            <strong>法人応援コース</strong><br>
+            はちのわサイト内にロゴ・社名を1年間掲載<br>
+            + はちみつ詰め合わせ3種セット
+          </td>
+          <td class="cost-note">掲載＋はちみつ2,500円</td>
+          <td>企業CSR・SDGs活動としての参加</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="edit-note" style="margin-top:16px;">
+      ⚠️ 要確認：各リターンのはちみつ品種・在庫上限・発送時期をエマさんと確認して確定する
+    </div>
+  </section>
+
+  <!-- 04 代表紹介 -->
+  <section id="profile">
+    <div class="section-label">04</div>
+    <h2>代表紹介文（たたき台）</h2>
+    <p style="font-size:13px; color:#888; margin-bottom:20px;">
+      BASEショップとLINEのやりとりをもとにした草稿。エマさんの言葉で加筆・修正してもらう前提。
+    </p>
+
+    <div class="profile-draft">
+      <div class="label">ABOUT — 代表 吉田エマ</div>
+
+      <p>
+        「はちみつマイスター」の資格を持つ養蜂家です。<br>
+        北海道札幌市を拠点に、宮の森・北の沢・玉翠園屋上・余市など
+        複数の場所でミツバチを育てています。
+      </p>
+
+      <p>
+        もともとは個人のお客さんに直接届けたくて始めた養蜂。
+        でも飼い始めると、ミツバチのことが気になって仕方がなくなりました。
+        採蜜は「いただく」感覚。「ミツバチと相談しながら、余剰分だけ分けてもらう」
+        というスタンスで、採れた日に発送するはちみつを販売しています。
+      </p>
+
+      <p>
+        毎年春、SNSで繰り返される"分蜂戦争"を見てきました。<br>
+        「近くだったら保護するのに」と思っても、場所も連絡先もわからない。<br>
+        駆除されるたびに、なんとかできないかなと思い続けてきました。<br>
+        「はちのわ」は、その「なんとかできないかな」を形にしたものです。
+      </p>
+
+      <p>
+        蜜蜂は怖くない。分蜂は、ハチが家を引っ越しするだけの自然現象です。<br>
+        日本中で、保護を選べる人が増えてほしい。
+        そのための仕組みを、一緒に作ってもらえませんか。
+      </p>
+    </div>
+
+    <div class="edit-note">
+      📝 エマさんへ：言い回し・エピソード・温度感は自由に直してください。「4年かけて養蜂の申請が通った話」「養蜂組合との軋轢」など、苦労してきた背景を入れるとリアリティが増します。
+    </div>
+  </section>
+
+  <!-- 05 概要文 -->
+  <section id="summary">
+    <div class="section-label">05</div>
+    <h2>プロジェクト概要文（400字）</h2>
+    <p style="font-size:13px; color:#888; margin-bottom:20px;">Readyforのサムネイル画像の下に表示される説明文。支援者が最初に読む文章。</p>
+
+    <div class="profile-draft">
+      <div class="label">SUMMARY TEXT — たたき台</div>
+      <p>
+        毎年春、SNSはざわつきます。<br>
+        「庭に蜂の大群が！どうすれば？」「近くだったら保護するのに……」「結局、駆除してもらいました」「なんで駆除するんだ！」<br>
+        ——こんなやりとりが、全国で毎年繰り返されています。
+      </p>
+      <p>
+        分蜂は、ミツバチが集団で「巣を引っ越し」する自然現象です。お腹に蜜を蓄えた穏やかな状態で、数時間〜数日でいなくなります。タイミングさえ合えば、養蜂家が保護できます。
+      </p>
+      <p>
+        「はちのわ」は、困っている人と保護したい養蜂家をリアルタイムでつなぐ全国マッチングサービスです。目撃報告は無料・1分。近くの登録養蜂家にLINEで即通知されます。
+      </p>
+      <p>
+        リターンには、代表エマが育てた「かえるやはちみつ」をご用意。採れた日に発送する、北海道の季節のはちみつです。駆除ではなく、保護を選べる社会へ。一緒に作ってもらえませんか。
+      </p>
+    </div>
+
+    <div class="edit-note">
+      📝 文字数目安：約390字。エマさんのひとことや具体的なエピソードを1〜2文足すと400字ちょうどになります。
+    </div>
+  </section>
+
+  <!-- 06 本文ストーリー -->
+  <section id="story">
+    <div class="section-label">06</div>
+    <h2>本文ストーリー（たたき台）</h2>
+    <p style="font-size:13px; color:#888; margin-bottom:20px;">Readyforの本文欄。支援者が読んで「応援したい」と思えるかが勝負。</p>
+
+    <div style="display:flex; flex-direction:column; gap:24px;">
+
+      <div class="profile-draft">
+        <div class="label">CHAPTER 1 — 毎年春に起きる「分蜂戦争」</div>
+        <p>
+          毎年春、SNSはざわつきます。<br><br>
+          「庭の木に蜂の大群！巣を作りそうで怖い」<br>
+          「近くだったら保護するのに……場所どこ？」<br>
+          「結局、業者に駆除してもらいました」<br>
+          「なんで駆除するんだ！」<br><br>
+          こんなやりとりが、全国のあちこちで毎年繰り返されています。<br>
+          保護したかった人も、駆除した人も、どちらも悪くない。<br>
+          ただ、つながる手段がなかっただけです。
+        </p>
+      </div>
+
+      <div class="profile-draft">
+        <div class="label">CHAPTER 2 — 分蜂って、なんですか？</div>
+        <p>
+          ミツバチが集団で「巣を引っ越し」する、自然現象です。<br><br>
+          春になると女王蜂を中心とする大群が巣を離れ、木や壁にかたまります。これが「分蜂（ぶんぽう）」。見た目はおどろおどろしいですが、お腹に蜜を蓄えたミツバチたちはとても穏やか。攻撃的になるのは、仲間や巣に危険がせまったときだけです。数時間〜数日でいなくなります。<br><br>
+          タイミングさえ合えば、養蜂家が保護できます。<br>
+          日本ミツバチなら、野生でも生きていける可能性がある。<br>
+          セイヨウミツバチは、早めに保護しないとスズメバチにやられてしまう。<br><br>
+          駆除より保護の方が、みんなにとってよい選択です。
+        </p>
+      </div>
+
+      <div class="profile-draft">
+        <div class="label">CHAPTER 3 — 「近くだったら保護するのに」を叶えたい</div>
+        <p>
+          問題は、出会えないことです。<br><br>
+          分蜂は数時間が勝負。SNSに投稿しても、近くの養蜂家が気づいたときにはもういない——というケースが多発しています。「保護したい人」と「保護してほしい人」が、ただそこにいるだけなのに、つながれない。<br><br>
+          「はちのわ」は、その課題を解決します。
+        </p>
+      </div>
+
+      <div class="profile-draft">
+        <div class="label">CHAPTER 4 — 仕組みはシンプル</div>
+        <p>
+          <strong>① 分蜂を発見したら報告する</strong>（無料・1分）<br>
+          写真と場所（地図ピン）を投稿するだけ。会員登録は不要です。<br><br>
+          <strong>② 近くの養蜂家にLINEで即通知</strong><br>
+          エリア登録した養蜂家のLINEにリアルタイムで通知が届きます。<br><br>
+          <strong>③ 養蜂家が駆けつけて保護</strong><br>
+          連絡先を交換して現地へ。費用の有無は養蜂家によって異なります。<br><br>
+          分蜂は時間との勝負なので、「見た→即通知」が命綱。LINEを使うのはそのためです。
+        </p>
+      </div>
+
+      <div class="profile-draft">
+        <div class="label">CHAPTER 5 — 代表より</div>
+        <p>
+          養蜂家の吉田エマです。<br><br>
+          北海道札幌市の宮の森・北の沢・玉翠園屋上や余市で、「かえるやはちみつ」としてミツバチを育てています。採れた日に発送する産地直送のはちみつを届けることにこだわっています。<br><br>
+          毎年春、SNSで「分蜂戦争」を眺めながら、なんとかならないかなとずっと思っていました。養蜂家として、保護できる人間が近くにいるのに出会えない——そのもどかしさは、私自身も何度も感じてきました。<br><br>
+          はちのわは、そのもどかしさを解消するために作ります。蜜蜂を守りたい人たちが、ちゃんとつながれる社会にしたい。
+        </p>
+        <div class="edit-note" style="margin-top:0;">
+          📝 エマさんへ：ここは一番、エマさん自身の言葉で書き直してほしい部分です。「4年かけて申請が通った話」「はじめて分蜂に出会ったときの話」など、リアルなエピソードを入れると一気に読み手に届きます。
+        </div>
+      </div>
+
+      <div class="profile-draft">
+        <div class="label">CHAPTER 6 — 支援金の使途</div>
+        <p>
+          いただいた支援金は以下に使わせていただきます。
+        </p>
+        <table style="width:100%; font-size:13px; border-collapse:collapse; margin-top:12px;">
+          <tr style="background:#f7f5f0;">
+            <td style="padding:8px 12px; font-weight:600; font-size:11px; letter-spacing:.08em; color:#888;">項目</td>
+            <td style="padding:8px 12px; font-weight:600; font-size:11px; letter-spacing:.08em; color:#888; text-align:right;">金額</td>
+          </tr>
+          <tr><td style="padding:8px 12px; border-bottom:1px solid #f0ede6;">サイト・システム制作費</td><td style="padding:8px 12px; border-bottom:1px solid #f0ede6; text-align:right;">35万円</td></tr>
+          <tr><td style="padding:8px 12px; border-bottom:1px solid #f0ede6;">ブランディング・ロゴ整備</td><td style="padding:8px 12px; border-bottom:1px solid #f0ede6; text-align:right;">5万円</td></tr>
+          <tr><td style="padding:8px 12px; border-bottom:1px solid #f0ede6;">利用規約・免責文書</td><td style="padding:8px 12px; border-bottom:1px solid #f0ede6; text-align:right;">5万円</td></tr>
+          <tr><td style="padding:8px 12px; border-bottom:1px solid #f0ede6;">リターン（はちみつ仕入・梱包・発送）</td><td style="padding:8px 12px; border-bottom:1px solid #f0ede6; text-align:right;">28万円</td></tr>
+          <tr><td style="padding:8px 12px; border-bottom:1px solid #f0ede6;">初年度運営費</td><td style="padding:8px 12px; border-bottom:1px solid #f0ede6; text-align:right;">12万円</td></tr>
+          <tr><td style="padding:8px 12px; border-bottom:1px solid #f0ede6;">Readyfor手数料（14%）</td><td style="padding:8px 12px; border-bottom:1px solid #f0ede6; text-align:right;">約15万円</td></tr>
+          <tr><td style="padding:8px 12px;">予備費</td><td style="padding:8px 12px; text-align:right;">10万円</td></tr>
+          <tr style="background:#f7f5f0;">
+            <td style="padding:10px 12px; font-weight:700;">合計</td>
+            <td style="padding:10px 12px; text-align:right; font-weight:700;">110万円</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="profile-draft">
+        <div class="label">CHAPTER 7 — 最後のひとこと</div>
+        <p>
+          蜜蜂は、農作物の受粉を支え、生態系を守る、なくてはならない存在です。<br>
+          でも、知られていないだけで、毎年たくさんの分蜂群が駆除されています。<br><br>
+          「保護したかった」という声と「どうすれば？」という声が、毎年すれ違い続けています。<br>
+          それを終わらせたい。<br><br>
+          はちのわを、一緒に作ってもらえませんか。<br>
+          蜜蜂のために、そして未来の生態系のために。
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 07 確認事項 -->
+  <section id="memo">
+    <div class="section-label">07</div>
+    <h2>確認事項</h2>
+
+    <div class="memo">
+      <ul>
+        <li><span class="tag-badge">エマ確認</span>クラファン申請名義：「はちのわ 任意団体」でよいか</li>
+        <li><span class="tag-badge">エマ確認</span>プラットフォーム：Readyforでよいか</li>
+        <li><span class="tag-badge">エマ確認</span>はちみつリターンの品種・量・在庫上限・発送時期</li>
+        <li><span class="tag-badge">エマ確認</span>採蜜体験の受入可能人数・時期</li>
+        <li><span class="tag-badge">エマ確認</span>代表紹介文の加筆・修正</li>
+        <li><span class="tag-badge">哲平確認</span>任意団体の規約ひな形を作成する</li>
+        <li><span class="tag-badge">哲平確認</span>7/11・7/25のイベントに向けたチラシ制作</li>
+        <li><span class="tag-badge">期限</span>7/11のイベントまでに：クラファンページのドラフトまで完成させる</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>
