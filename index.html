@@ -3,8 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>はちのわ — 全国蜜蜂レスキューネットワーク</title>
-  <meta name="description" content="ハチの大群を見つけたら、はちのわへ。困った人と保護したい養蜂家をつなぐ全国ネットワーク。報告は無料、1分で完了。">
+
+  <!-- ===== SEO: 基本 ===== -->
+  <title>はちのわ | 分蜂を見つけたら保護へつなぐ全国マッチング</title>
+  <meta name="description" content="分蜂を見つけたら「はちのわ」へ。ミツバチの大群と保護したい養蜂家をリアルタイムでつなぐ全国マッチングプラットフォーム。駆除ではなく保護を選べる社会へ。報告無料・1分。">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="はちのわ（任意団体）">
+  <meta name="keywords" content="分蜂,ミツバチ,蜂 大群,養蜂家,分蜂 保護,分蜂 どうする,ミツバチ 保護,分蜂 マッチング,蜜蜂 救済,はちのわ">
+
+  <!-- ===== SEO: canonical ===== -->
+  <link rel="canonical" href="https://teppay0v0.github.io/hachinowa-lp/">
+
+  <!-- ===== SEO: OGP ===== -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:site_name" content="はちのわ">
+  <meta property="og:url" content="https://teppay0v0.github.io/hachinowa-lp/">
+  <meta property="og:title" content="はちのわ | 分蜂を見つけたら保護へつなぐ全国マッチング">
+  <meta property="og:description" content="「ハチの大群を見かけた、どうしよう」という声と「近くなら保護するのに」という養蜂家をリアルタイムでつなぐ全国プラットフォーム。報告は完全無料。">
+  <meta property="og:image" content="https://teppay0v0.github.io/hachinowa-lp/images/ogp.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="はちのわ — 分蜂保護マッチングプラットフォーム">
+
+  <!-- ===== SEO: Twitter Card ===== -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="はちのわ | 分蜂を見つけたら保護へつなぐ全国マッチング">
+  <meta name="twitter:description" content="「ハチの大群を見かけた、どうしよう」という声と「近くなら保護するのに」という養蜂家をリアルタイムでつなぐ全国プラットフォーム。">
+  <meta name="twitter:image" content="https://teppay0v0.github.io/hachinowa-lp/images/ogp.png">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap');
 
@@ -813,7 +839,139 @@
     body { padding-top: 24px; }
     .header { top: 24px; }
     .side-panel { top: 24px; }
+
+    /* ============================================
+       FAQ Section
+       ============================================ */
+    .faq-section { background: var(--bg-main); }
+    .faq-list { display: flex; flex-direction: column; gap: 16px; }
+    .faq-item {
+      background: #FFF;
+      border: 2.5px solid var(--text);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      box-shadow: 3px 3px 0 var(--text);
+    }
+    .faq-item:nth-child(odd) { transform: rotate(-0.5deg); }
+    .faq-item:nth-child(even) { transform: rotate(0.5deg); }
+    .faq-q {
+      font-size: 15px; font-weight: 900;
+      color: var(--text);
+      margin-bottom: 8px;
+      padding-left: 26px;
+      position: relative;
+    }
+    .faq-q::before {
+      content: 'Q';
+      position: absolute; left: 0; top: 0;
+      font-family: var(--font-display);
+      font-size: 17px; color: var(--gold-deep);
+    }
+    .faq-a {
+      font-size: 13px; color: var(--text-soft);
+      line-height: 1.85; font-weight: 500;
+      padding-left: 26px; position: relative;
+    }
+    .faq-a::before {
+      content: 'A';
+      position: absolute; left: 0; top: 0;
+      font-family: var(--font-display);
+      font-size: 17px; color: var(--coral);
+    }
   </style>
+
+  <!-- ===== SEO: JSON-LD 構造化データ ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://teppay0v0.github.io/hachinowa-lp/#organization",
+        "name": "はちのわ",
+        "alternateName": "HACHINOWA",
+        "description": "ミツバチの分蜂を駆除ではなく保護へつなぐ全国マッチングプラットフォーム",
+        "url": "https://teppay0v0.github.io/hachinowa-lp/",
+        "foundingDate": "2026",
+        "foundingLocation": {
+          "@type": "Place",
+          "name": "札幌市",
+          "addressCountry": "JP"
+        },
+        "founder": {
+          "@type": "Person",
+          "name": "吉田エマ",
+          "jobTitle": "はちみつマイスター"
+        },
+        "knowsAbout": ["ミツバチ", "分蜂", "養蜂", "蜂蜜", "生態系保護", "分蜂マッチング"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://teppay0v0.github.io/hachinowa-lp/#website",
+        "url": "https://teppay0v0.github.io/hachinowa-lp/",
+        "name": "はちのわ",
+        "description": "ミツバチの分蜂を駆除ではなく保護へつなぐ全国マッチングプラットフォーム",
+        "inLanguage": "ja",
+        "publisher": {
+          "@id": "https://teppay0v0.github.io/hachinowa-lp/#organization"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "分蜂とは何ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "分蜂（ぶんぽう）とは、ミツバチが群れを分けて新しい巣を探す自然現象です。女王蜂と働き蜂の一部が巣を離れ、木の枝や軒下などに一時的に集まります。数時間〜数日で移動するため、攻撃しない限りほとんど危険はありません。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "分蜂を見つけたら危険ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "分蜂中のミツバチはお腹いっぱいに蜜を蓄えており、守るべき巣もないため非常に温和です。直接触ったり、脅かしたりしなければほとんど刺しません。静かに距離をとり、はちのわへ報告してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "報告は無料ですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい、分蜂の目撃報告は完全無料です。写真と場所を送るだけで1〜2分で完了します。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "養蜂家でなくても使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "もちろんです。分蜂の目撃報告はどなたでも無料でご利用いただけます。「大量のハチを見かけた」「これって分蜂？」と思ったらお気軽に報告してください。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "養蜂家として登録するにはどうすればいいですか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "登録フォームから氏名・活動地域・連絡先を入力するだけです。登録は無料で、分蜂群の入手機会やはちみつ販売ページの掲載などの特典があります。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "はちのわは日本全国で使えますか？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい、全国どこからでも報告・登録いただけます。分蜂は春〜初夏にかけて全国各地で起こる現象です。登録養蜂家が近くにいない地域でも、情報を蓄積することで将来的に対応できる体制を目指しています。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -1207,6 +1365,43 @@
       <a href="#">利用規約</a>
       <a href="#">プライバシーポリシー</a>
       <a href="#">お問い合わせ</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ (SEO: フィーチャードスニペット狙い) -->
+<section class="frame-section faq-section" id="faq">
+  <div class="frame">
+    <div class="section-head">
+      <span class="section-eyebrow">FAQ</span>
+      <h2 class="section-title">よくある質問</h2>
+      <span class="section-divider"></span>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3 class="faq-q">分蜂とは何ですか？</h3>
+        <p class="faq-a">ミツバチが群れを分けて新しい巣を探す自然現象です。女王蜂と働き蜂の一部が巣を離れ、木の枝や軒下などに一時的に集まります。数時間〜数日で自然に移動するため、攻撃しない限りほとんど危険はありません。</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">分蜂を見つけたら危険ですか？</h3>
+        <p class="faq-a">分蜂中のミツバチはお腹いっぱいに蜜を蓄え、守るべき巣もないため非常に温和です。直接触ったり脅かしたりしなければほとんど刺しません。静かに距離をとってはちのわへ報告してください。</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">報告は無料ですか？</h3>
+        <p class="faq-a">はい、完全無料です。写真と場所を送るだけで1〜2分で完了します。</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">養蜂家でなくても使えますか？</h3>
+        <p class="faq-a">もちろんです。「大量のハチを見かけた」「これって分蜂？」と思ったらどなたでもお気軽に報告してください。</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">はちのわは全国対応ですか？</h3>
+        <p class="faq-a">はい、全国どこからでも報告・登録いただけます。分蜂は春〜初夏にかけて全国各地で起こる現象です。</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">養蜂家として登録するには？</h3>
+        <p class="faq-a">登録フォームから氏名・活動地域・連絡先を入力するだけです。登録は無料で、地域の分蜂群の入手機会やはちみつ販売ページの掲載などの特典があります。</p>
+      </div>
     </div>
   </div>
 </section>
