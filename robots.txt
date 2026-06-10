@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://teppay0v0.github.io/hachinowa-lp/sitemap.xml
+Sitemap: https://helpbee.jp/sitemap.xml
