@@ -39,20 +39,20 @@
 
     :root {
       --bg-main: #FFFCE8;       /* 薄黄クリーム */
-      --bg-cream: #FFF4A8;      /* 黄色 */
-      --bg-sage: #DEEDA0;       /* 黄緑 */
-      --bg-sky: #FFE890;        /* 黄ソフト */
-      --bg-mint: #C5EAE5;       /* ミント差し色背景 */
-      --gold: #FFD834;          /* メイン黄色 */
-      --gold-deep: #E0AC00;     /* 黄深 */
-      --green: #B8DD4B;         /* サブ黄緑 */
-      --green-deep: #7BB02E;    /* 緑深 */
-      --coral: #F95743;         /* POP差し色 */
-      --mint: #64C8BE;          /* 補助 */
+      --bg-cream: #FFF8E8;      /* 温かみクリーム */
+      --bg-sage: #CDD4B0;       /* オリーブセージ */
+      --bg-sky: #F5EAD0;        /* ハニーウォーム */
+      --bg-mint: #CDD4B0;       /* セージ */
+      --gold: #E6AA36;          /* アンバーゴールド */
+      --gold-deep: #C07A18;     /* ディープアンバー */
+      --green: #929861;         /* オリーブグリーン */
+      --green-deep: #6B7445;    /* ダークオリーブ */
+      --coral: #C05030;         /* テラコッタ */
+      --mint: #7A9870;          /* セージミント */
       --text: #1F1F1F;
       --text-soft: #5B5B5B;
       --text-light: #8A8A8A;
-      --line: #ECE4D0;
+      --line: #DDD4B8;
       --shadow-sm: 0 2px 8px rgba(31, 31, 31, 0.08);
       --shadow-md: 0 4px 16px rgba(31, 31, 31, 0.10);
       --shadow-lg: 0 8px 32px rgba(31, 31, 31, 0.15);
@@ -69,7 +69,7 @@
       font-weight: 500;
       color: var(--text);
       line-height: 1.75;
-      background: #5FB5F0;
+      background: #8CB890;
       background-attachment: fixed;
       -webkit-font-smoothing: antialiased;
     }
@@ -127,7 +127,7 @@
     /* Sky background (always visible behind scenes) */
     .scene-bg-sky {
       position: absolute; inset: 0;
-      background: #5FB5F0;
+      background: #8CB890;
     }
 
     /* Scene layers as image backgrounds */
@@ -145,7 +145,7 @@
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      background: #5FB5F0;
+      background: #8CB890;
     }
     .bg-scene-cycle .scene-layer {
       position: absolute;
@@ -388,13 +388,7 @@
       display: inline-block;
       transform: rotate(-1.5deg);
     }
-    .logo-name::after {
-      content: '🐝';
-      font-size: 18px;
-      display: inline-block;
-      margin-left: 2px;
-      animation: bouncy 2.4s ease-in-out infinite;
-    }
+
     .logo-sub {
       font-size: 10px; color: var(--text-soft);
       display: block; letter-spacing: 0.05em; font-weight: 700;
@@ -490,15 +484,16 @@
     }
     .hero-cta .btn { width: 100%; }
     .hero-visual {
-      aspect-ratio: 1 / 1;
-      max-width: 220px; margin: 0 auto 28px;
-      background: #FFF; border-radius: 50%;
-      border: 3px solid var(--text);
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 5px 5px 0 var(--text);
-      font-size: 80px;
+      max-width: 200px;
+      margin: 0 auto 32px;
       transform: rotate(-3deg);
       animation: bouncy 3s ease-in-out infinite;
+      filter: drop-shadow(4px 4px 0 rgba(31,31,31,0.15));
+    }
+    .hero-visual img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
     .hero-note {
       font-size: 11px; color: var(--text-soft); text-align: center; font-weight: 500;
@@ -1141,7 +1136,7 @@
 <!-- 1. HERO -->
 <section class="frame-section hero">
   <div class="frame">
-    <div class="hero-visual">🐝</div>
+    <div class="hero-visual"><img src="images/helpbee_logo.svg" alt="Help Bee ロゴ"></div>
     <h1 class="hero-headline">
       ハチの大群<span class="pop">!?</span><br>
       それ、<em>分蜂かも！</em>
