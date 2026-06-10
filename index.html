@@ -10,8 +10,6 @@
   <meta name="robots" content="index, follow">
   <meta name="author" content="Help Bee（任意団体）">
   <meta name="keywords" content="分蜂,ミツバチ,蜂 大群,養蜂家,分蜂 保護,分蜂 どうする,ミツバチ 保護,分蜂 マッチング,蜜蜂 救済,Help Bee,ヘルプビー">
-
-  <!-- ===== SEO: canonical ===== -->
   <link rel="canonical" href="https://helpbee.jp/">
 
   <!-- ===== SEO: OGP ===== -->
@@ -31,827 +29,931 @@
   <meta name="twitter:title" content="Help Bee | 分蜂を見つけたら保護へつなぐ全国マッチング">
   <meta name="twitter:description" content="「ハチの大群を見かけた、どうしよう」という声と「近くなら保護するのに」という養蜂家をリアルタイムでつなぐ全国プラットフォーム。">
   <meta name="twitter:image" content="https://helpbee.jp/images/ogp.png">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap');
 
+  <!-- ===== Fonts ===== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;600;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+
+  <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-
-    :root {
-      --bg-main: #FFFCE8;       /* 薄黄クリーム */
-      --bg-cream: #FFF8E8;      /* 温かみクリーム */
-      --bg-sage: #CDD4B0;       /* オリーブセージ */
-      --bg-sky: #F5EAD0;        /* ハニーウォーム */
-      --bg-mint: #CDD4B0;       /* セージ */
-      --gold: #E6AA36;          /* アンバーゴールド */
-      --gold-deep: #C07A18;     /* ディープアンバー */
-      --green: #929861;         /* オリーブグリーン */
-      --green-deep: #6B7445;    /* ダークオリーブ */
-      --coral: #C05030;         /* テラコッタ */
-      --mint: #7A9870;          /* セージミント */
-      --text: #1F1F1F;
-      --text-soft: #5B5B5B;
-      --text-light: #8A8A8A;
-      --line: #DDD4B8;
-      --shadow-sm: 0 2px 8px rgba(31, 31, 31, 0.08);
-      --shadow-md: 0 4px 16px rgba(31, 31, 31, 0.10);
-      --shadow-lg: 0 8px 32px rgba(31, 31, 31, 0.15);
-      --shadow-pop: 4px 4px 0 var(--text);
-      --radius: 18px;
-      --radius-lg: 28px;
-      --font-display: 'Cherry Bomb One', 'Zen Kaku Gothic New', system-ui, sans-serif;
-      --font-base: 'Zen Kaku Gothic New', 'Hiragino Sans', 'Yu Gothic', sans-serif;
-      --frame-width: 460px;
-    }
-
     body {
-      font-family: var(--font-base);
-      font-weight: 500;
-      color: var(--text);
-      line-height: 1.75;
-      background: #8CB890;
-      background-attachment: fixed;
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      font-family: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+      font-weight: 500;
+      color: #38352C;
+      line-height: 1.85;
+      background: #EFE9DA;
     }
-
-    /* ============================================
-       Wobble animations (mejinavi-inspired pop)
-       ============================================ */
-    @keyframes wobble {
-      0%, 100% { transform: rotate(-3deg); }
-      50% { transform: rotate(3deg); }
-    }
-    @keyframes bouncy {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
-    @keyframes popIn {
-      0% { transform: scale(0.8) rotate(-8deg); opacity: 0; }
-      100% { transform: scale(1) rotate(-2deg); opacity: 1; }
-    }
-    .wobble { display: inline-block; animation: wobble 2.6s ease-in-out infinite; }
-    .bouncy { display: inline-block; animation: bouncy 2s ease-in-out infinite; }
-
     img { max-width: 100%; height: auto; display: block; }
     a { color: inherit; text-decoration: none; }
     button { font: inherit; cursor: pointer; border: none; background: none; }
 
-    /* ============================================
-       FIXED SIDE PANELS (don't scroll)
-       ============================================ */
-    .side-panel {
-      position: fixed;
-      top: 0; bottom: 0;
-      width: calc((100vw - var(--frame-width)) / 2);
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 10;
-      display: none;
-    }
-    @media (min-width: 960px) {
-      .side-panel { display: block; }
-    }
-    .side-left { left: 0; }
-    .side-right { right: 0; }
-
-    /* Scene layers (stacked, only one visible) */
-    .scene-stack { position: absolute; inset: 0; }
-    .scene-layer {
-      position: absolute; inset: 0;
-      opacity: 0;
-      transition: opacity 2.5s ease-in-out;
-    }
-    .scene-layer.active { opacity: 1; }
-    .scene-layer svg { width: 100%; height: 100%; display: block; }
-
-    /* Sky background (always visible behind scenes) */
-    .scene-bg-sky {
-      position: absolute; inset: 0;
-      background: #8CB890;
-    }
-
-    /* Scene layers as image backgrounds */
-    .scene-layer.with-image {
-      background-size: cover;
-      background-position: center bottom;
-      background-repeat: no-repeat;
-    }
-
-    /* ============================================
-       Global scene background (fixed full-screen)
-       ============================================ */
-    .bg-scene-cycle {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background: #8CB890;
-    }
-    .bg-scene-cycle .scene-layer {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 2.5s ease-in-out;
-      background-size: cover;
-      background-position: center bottom;
-      background-repeat: no-repeat;
-    }
-    .bg-scene-cycle .scene-layer.active { opacity: 1; }
-
-    /* Frosted glass on center column (above bees, below content) */
-    .center-glass {
-      position: fixed;
-      top: 0; bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: var(--frame-width);
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(20px) saturate(120%);
-      -webkit-backdrop-filter: blur(20px) saturate(120%);
-      z-index: 2;
-      pointer-events: none;
-      border-left: 1px solid rgba(255, 255, 255, 0.5);
-      border-right: 1px solid rgba(255, 255, 255, 0.5);
-    }
-    @media (max-width: 700px) {
-      .center-glass {
-        width: 100%;
-        background: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(14px) saturate(120%);
-      }
-    }
-
-    /* ============================================
-       Flying bees (random spawn, cross-screen)
-       ============================================ */
-    .bee-wrapper {
-      position: fixed;
-      left: 0; top: 0;
-      pointer-events: none;
-      z-index: 1;  /* behind frosted glass */
-      will-change: transform;
-    }
-    .bee-wrapper.dir-right {
-      animation: flyLeftToRight 12s linear forwards;
-    }
-    .bee-wrapper.dir-left {
-      animation: flyRightToLeft 12s linear forwards;
-    }
-    .bee-inner {
-      width: 100%; height: 100%;
-      animation: beeWobble 0.9s ease-in-out infinite alternate;
-      will-change: transform;
-    }
-    .bee-inner.dir-left {
-      transform: scaleX(-1);
-    }
-    .bee-svg {
-      width: 100%; height: 100%;
-      overflow: visible;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.18));
-    }
-
+    /* ===== Bee animations ===== */
     @keyframes flyLeftToRight {
       from { transform: translateX(-120px); }
-      to { transform: translateX(calc(100vw + 120px)); }
+      to   { transform: translateX(calc(100vw + 120px)); }
     }
     @keyframes flyRightToLeft {
       from { transform: translateX(calc(100vw + 120px)); }
-      to { transform: translateX(-120px); }
+      to   { transform: translateX(-120px); }
     }
     @keyframes beeWobble {
       0%   { transform: translateY(-12px) rotate(-4deg); }
       100% { transform: translateY(12px) rotate(4deg); }
-    }
-    .bee-inner.dir-left.wobbling {
-      animation: beeWobbleLeft 0.9s ease-in-out infinite alternate;
     }
     @keyframes beeWobbleLeft {
       0%   { transform: scaleX(-1) translateY(-12px) rotate(4deg); }
       100% { transform: scaleX(-1) translateY(12px) rotate(-4deg); }
     }
 
-    /* ============================================
-       SIDE CTA (left panel, bottom-center)
-       ============================================ */
-    .side-cta {
-      position: absolute;
-      bottom: 8%; left: 50%;
-      transform: translateX(-50%);
-      display: flex; flex-direction: column; gap: 14px;
-      pointer-events: auto;
-      z-index: 20;
-      width: 88%; max-width: 260px;
-    }
-    .side-cta .btn { width: 100%; padding: 16px 18px; font-size: 14px; }
-    .side-cta-label {
-      font-family: var(--font-display);
-      font-size: 14px; color: var(--coral);
-      text-align: center; margin-bottom: 4px;
-      background: #FFF;
-      padding: 6px 14px; border-radius: 999px;
-      align-self: center;
-      border: 2.5px solid var(--text);
-      box-shadow: 3px 3px 0 var(--text);
-      transform: rotate(-2deg);
+    /* ===== Layout ===== */
+    .page-wrap {
+      position: relative;
+      min-height: 100vh;
     }
 
-    /* ============================================
-       SCENE NAME (small label, top of left panel)
-       ============================================ */
-    .scene-name {
-      position: absolute;
-      top: 80px; left: 50%;
-      transform: translateX(-50%) rotate(-2deg);
-      background: #FFF;
-      padding: 8px 18px;
-      border-radius: 999px;
-      font-size: 12px;
-      color: var(--text);
-      font-weight: 900;
-      letter-spacing: 0.05em;
-      border: 2.5px solid var(--text);
-      box-shadow: 3px 3px 0 var(--text);
-      z-index: 15;
-      white-space: nowrap;
-    }
-
-    /* ============================================
-       FLOATING CTA (mobile only)
-       ============================================ */
-    .floating-cta {
+    /* Fixed watercolor background */
+    .bg-fixed {
       position: fixed;
-      bottom: 18px; right: 18px;
-      z-index: 100;
-    }
-    .floating-cta .btn {
-      padding: 16px 22px;
-      font-size: 14px;
-      font-weight: 900;
-      background: var(--gold);
-      color: var(--text);
-      border: 2.5px solid var(--text);
-      box-shadow: 4px 4px 0 var(--text);
-      border-radius: 999px;
-      letter-spacing: 0.04em;
-    }
-    .floating-cta .btn:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 6px 6px 0 var(--text);
-    }
-    @media (min-width: 960px) {
-      .floating-cta { display: none; }
-      body { padding-bottom: 0; }
-    }
-    @media (max-width: 959px) {
-      body { padding-bottom: 100px; }
+      inset: 0;
+      z-index: 0;
+      background-image: linear-gradient(rgba(251,248,240,0.34), rgba(251,248,240,0.5)),
+                        url('images/scene.jpg');
+      background-size: cover;
+      background-position: center 30%;
     }
 
-    /* ============================================
-       CENTER FRAME (the "phone")
-       ============================================ */
-    .frame {
-      max-width: var(--frame-width);
+    /* Flying bee field */
+    .bee-field {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /* Editorial center column */
+    .center-col {
+      position: relative;
+      z-index: 1;
+      max-width: 608px;
       margin: 0 auto;
-      padding: 0 20px;
-      position: relative;
-      z-index: 5;
+      min-height: 100vh;
+      background: rgba(252, 247, 235, 0.975);
+      box-shadow: 0 0 60px rgba(58, 53, 40, 0.16);
     }
 
-    section.frame-section {
-      padding: 56px 0 64px;
-      position: relative;
+    /* ===== Header ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(251, 248, 240, 0.86);
+      backdrop-filter: saturate(160%) blur(12px);
+      -webkit-backdrop-filter: saturate(160%) blur(12px);
+      border-bottom: 1px solid #E7E0CE;
     }
-
-    /* ============================================
-       BUTTONS (POP / mejinavi-inspired)
-       ============================================ */
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      padding: 14px 24px; border-radius: 999px;
-      font-family: var(--font-base);
-      font-size: 14px; font-weight: 900;
-      transition: all 0.18s ease;
-      white-space: nowrap;
-      cursor: pointer;
-      gap: 4px;
-      border: 2.5px solid var(--text);
-      box-shadow: 3px 3px 0 var(--text);
-      letter-spacing: 0.02em;
+    .site-header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 32px;
     }
-    .btn:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--text); }
-    .btn:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--text); }
-    .btn-primary {
-      background: var(--gold); color: var(--text);
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
     }
-    .btn-secondary {
-      background: #FFF; color: var(--text);
-    }
-    .btn-green {
-      background: var(--green); color: var(--text); font-weight: 900;
-    }
-    .btn-coral {
-      background: var(--coral); color: #FFF;
-    }
-    .btn-large { padding: 18px 28px; font-size: 16px; }
-
-    /* ============================================
-       HEADER
-       ============================================ */
-    .header {
-      position: sticky; top: 0; z-index: 90;
-      background: rgba(255, 254, 246, 0.92);
-      backdrop-filter: saturate(180%) blur(10px);
-      border-bottom: 1px solid var(--line);
-    }
-    .header-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 0;
-    }
-    .logo-name {
-      font-family: var(--font-base);
-      font-size: 24px; font-weight: 900;
-      letter-spacing: 0.04em;
-      color: var(--text);
-      display: inline-block;
-      transform: rotate(-1.5deg);
-    }
-
-    .logo-sub {
-      font-size: 10px; color: var(--text-soft);
-      display: block; letter-spacing: 0.05em; font-weight: 700;
-    }
-    .header-mini-link {
-      font-size: 12px; color: var(--text-soft);
-      padding: 6px 10px;
-    }
-
-    /* ============================================
-       SECTION COMMON
-       ============================================ */
-    .section-eyebrow {
-      display: inline-block;
-      font-family: var(--font-display);
-      font-size: 16px; letter-spacing: 0.08em;
-      color: var(--coral); font-weight: normal;
-      margin-bottom: 14px;
-      transform: rotate(-2deg);
-    }
-    .section-title {
-      font-family: var(--font-base);
-      font-size: 28px; font-weight: 900; line-height: 1.45;
-      color: var(--text);
-      margin-bottom: 10px;
-      letter-spacing: 0.01em;
-    }
-    .section-title em {
-      font-family: var(--font-display);
-      font-style: normal;
-      color: var(--coral);
-      font-weight: normal;
-      display: inline-block;
-      transform: rotate(-3deg);
-    }
-    .section-lead {
-      color: var(--text-soft); font-size: 14px; line-height: 1.85;
+    .header-logo img.bee-icon { width: 31px; height: auto; }
+    .header-wordmark { height: 20px; width: auto; display: block; }
+    .header-tagline {
+      font-size: 10px;
+      color: #9A9382;
+      letter-spacing: 0.14em;
+      margin-top: 3px;
       font-weight: 500;
     }
-    .section-head { text-align: center; margin-bottom: 36px; }
-    .section-divider {
-      display: block; width: 48px; height: 5px;
-      background: var(--gold); margin: 14px auto 18px;
-      border-radius: 4px;
-      transform: rotate(-2deg);
+    .header-nav a {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      color: #7C8466;
+      border-bottom: 1px solid #C9C2AD;
+      padding-bottom: 2px;
     }
 
-    /* All sections transparent — sky background shows through */
-    .frame-section { background: transparent !important; }
-    .footer { /* footer stays opaque */ }
-    .header { background: rgba(255, 252, 232, 0.85) !important; }
+    /* ===== Sections ===== */
+    .section {
+      padding: 56px 32px;
+      border-top: 1px solid #EDE6D5;
+    }
+    .section-warm { background: #F8EFDA; }
+    .section-center { text-align: center; }
 
-    /* ============================================
-       1. HERO (POP version)
-       ============================================ */
+    .eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 15px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #B8862F;
+      margin-bottom: 12px;
+    }
+    .section-heading {
+      font-family: 'Zen Old Mincho', serif;
+      font-weight: 700;
+      font-size: 25px;
+      line-height: 1.5;
+      color: #38352C;
+    }
+    .section-lead {
+      font-size: 13px;
+      color: #6B6657;
+      margin-top: 12px;
+    }
+
+    /* ===== Divider ===== */
+    .bee-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      margin: 14px auto 0;
+    }
+    .bee-divider span {
+      width: 30px;
+      height: 1px;
+      background: #D8CFB8;
+    }
+    .bee-divider img { width: 25px; height: auto; }
+
+    /* ===== Buttons ===== */
+    .btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 17px 24px;
+      border-radius: 999px;
+      background: #B8862F;
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      transition: background 0.2s ease;
+    }
+    .btn-primary:hover { background: #A0741F; }
+
+    .btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 24px;
+      border-radius: 999px;
+      background: transparent;
+      border: 1px solid #C2BBA4;
+      color: #38352C;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      transition: all 0.2s ease;
+    }
+    .btn-secondary:hover { border-color: #7C8466; color: #5C6347; }
+
+    .btn-sage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 17px 24px;
+      border-radius: 999px;
+      background: #5C6347;
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      transition: background 0.2s ease;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+    .btn-sage:hover { background: #4A5038; }
+
+    /* ===== Hero ===== */
     .hero {
-      background: var(--bg-cream);
-      background-image:
-        radial-gradient(circle at 20% 30%, var(--green) 0%, transparent 20%),
-        radial-gradient(circle at 80% 70%, var(--mint) 0%, transparent 18%);
-    }
-    .hero-headline {
-      font-family: var(--font-base);
-      font-size: 32px; font-weight: 900; line-height: 1.4;
-      margin-bottom: 14px; letter-spacing: 0.01em;
+      padding: 58px 32px 64px;
       text-align: center;
+      border-top: none;
     }
-    .hero-headline em {
-      font-style: normal; color: var(--text);
-      background: var(--gold);
-      padding: 2px 12px; border-radius: 8px;
-      display: inline-block;
-      transform: rotate(-2deg);
-      box-shadow: 3px 3px 0 var(--text);
-      margin: 4px 0;
+    .hero-logo { width: 158px; margin: 0 auto 30px; }
+    .hero-h1 {
+      font-family: 'Zen Old Mincho', serif;
+      font-weight: 700;
+      font-size: 29px;
+      line-height: 1.72;
+      letter-spacing: 0.02em;
+      color: #38352C;
+      margin-bottom: 20px;
     }
-    .hero-headline .pop {
-      font-family: var(--font-display);
-      color: var(--coral);
-      font-size: 56px;
-      font-weight: normal;
-      display: inline-block;
-      vertical-align: middle;
-      animation: wobble 2.6s ease-in-out infinite;
-      line-height: 0.9;
+    .hero-h1 .accent {
+      color: #B8862F;
+      border-bottom: 2px solid #E3C57E;
+      padding-bottom: 1px;
     }
     .hero-sub {
-      font-size: 14px; color: var(--text); font-weight: 500;
-      text-align: center; margin-bottom: 28px; line-height: 1.9;
+      font-size: 14px;
+      color: #6B6657;
+      line-height: 2;
+      max-width: 420px;
+      margin: 0 auto 32px;
     }
     .hero-cta {
-      display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;
-    }
-    .hero-cta .btn { width: 100%; }
-    .hero-visual {
-      max-width: 200px;
-      margin: 0 auto 32px;
-      transform: rotate(-3deg);
-      animation: bouncy 3s ease-in-out infinite;
-      filter: drop-shadow(4px 4px 0 rgba(31,31,31,0.15));
-    }
-    .hero-visual img {
-      width: 100%;
-      height: auto;
-      display: block;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      max-width: 360px;
+      margin: 0 auto 18px;
     }
     .hero-note {
-      font-size: 11px; color: var(--text-soft); text-align: center; font-weight: 500;
+      font-size: 11px;
+      color: #9A9382;
+      letter-spacing: 0.02em;
     }
 
-    /* ============================================
-       2. FLOWCHART
-       ============================================ */
-    .flowchart-section { background: var(--bg-main); }
-    .flowchart-wrap {
-      background: #FFF; border-radius: var(--radius-lg);
-      padding: 24px;
-      border: 2.5px solid var(--text);
-      box-shadow: 5px 5px 0 var(--text);
-      transform: rotate(-1deg);
+    /* ===== Flow section ===== */
+    .flow-start {
+      border: 1.5px solid #C9B98A;
+      border-radius: 16px;
+      background: #FFFDF7;
+      padding: 16px 20px;
+      text-align: center;
+      margin-bottom: 6px;
     }
-    .flowchart-placeholder {
-      aspect-ratio: 1 / 1; background: var(--bg-cream);
-      border-radius: var(--radius); border: 1px dashed var(--line);
-      display: flex; align-items: center; justify-content: center;
-      flex-direction: column; gap: 8px; color: var(--text-light);
+    .flow-start span {
+      font-family: 'Zen Old Mincho', serif;
+      font-weight: 600;
+      font-size: 16px;
+      color: #5C5240;
+      letter-spacing: 0.03em;
     }
-    .flowchart-placeholder strong { color: var(--text-soft); font-size: 13px; font-weight: 700; }
-    .flowchart-placeholder em { font-size: 11px; font-style: normal; }
-
-    /* ============================================
-       3. 3 STEPS
-       ============================================ */
-    .steps-section { background: var(--bg-sage); }
-    .steps-grid { display: flex; flex-direction: column; gap: 20px; }
-    .step-card {
-      background: #FFF; padding: 22px 22px;
-      border-radius: var(--radius-lg);
-      border: 2.5px solid var(--text);
-      box-shadow: 4px 4px 0 var(--text);
-      display: flex; gap: 18px; align-items: flex-start;
+    .flow-legend {
+      position: relative;
     }
-    .step-card:nth-child(1) { transform: rotate(-1.5deg); }
-    .step-card:nth-child(2) { transform: rotate(1.2deg); }
-    .step-card:nth-child(3) { transform: rotate(-1deg); }
-    .step-num {
+    .flow-legend .arrow-line {
+      position: absolute;
+      left: 56px;
+      top: 0;
+      bottom: 6px;
+      width: 2.5px;
+      background: #C9B98A;
+      border-radius: 2px;
+    }
+    .flow-legend .arrow-line::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -2px;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 9px solid #C9B98A;
+    }
+    .flow-legend-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 7px;
+      font-size: 12px;
+      color: #6B6657;
+      padding: 7px 0 22px;
+    }
+    .chip-yes {
+      background: #B8862F;
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      padding: 4px 13px;
+      border-radius: 8px;
+    }
+    .chip-no {
+      background: #EADCBE;
+      color: #8A7A52;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      padding: 4px 13px;
+      border-radius: 8px;
+    }
+    .flow-card {
+      border: 1.5px solid #E6DAC0;
+      border-radius: 20px;
+      background: #FFFFFF;
+      box-shadow: 0 8px 22px rgba(150, 120, 55, 0.08);
+      padding: 20px 22px;
+    }
+    .flow-card-top {
+      display: flex;
+      gap: 13px;
+      align-items: flex-start;
+    }
+    .step-badge {
       flex-shrink: 0;
-      width: 52px; height: 52px;
-      background: var(--gold); color: var(--text);
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      border: 2.5px solid var(--text);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-display);
-      font-size: 30px; font-weight: normal;
-      line-height: 1;
-      box-shadow: 2px 2px 0 var(--text);
+      background: #F4E7C6;
+      color: #A0741F;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-weight: 700;
+      font-size: 21px;
     }
-    .step-title {
-      font-family: var(--font-base);
-      font-size: 18px; font-weight: 900; margin-bottom: 6px;
+    .flow-question {
+      font-family: 'Zen Old Mincho', serif;
+      font-weight: 600;
+      font-size: 15px;
+      color: #38352C;
+      line-height: 1.6;
+      padding-top: 3px;
     }
-    .step-desc { font-size: 13px; color: var(--text-soft); line-height: 1.7; font-weight: 500; }
+    .flow-answers {
+      display: flex;
+      gap: 12px;
+      align-items: stretch;
+      margin-top: 15px;
+    }
+    .flow-yes {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 78px;
+      background: #B8862F;
+      color: #FFFFFF;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      padding: 0 18px;
+    }
+    .flow-no-group {
+      flex: 1;
+      display: flex;
+      gap: 11px;
+      align-items: center;
+      background: #F6EFDD;
+      border: 1px solid #ECE1C6;
+      border-radius: 12px;
+      padding: 11px 13px;
+    }
+    .flow-no-chip {
+      flex-shrink: 0;
+      background: #EADCBE;
+      color: #8A7A52;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      padding: 9px 15px;
+    }
+    .flow-no-text {
+      font-size: 11.5px;
+      color: #8A8472;
+      line-height: 1.55;
+    }
+    .flow-connector {
+      padding: 5px 0 5px 56px;
+    }
+    .flow-connector-line {
+      width: 2.5px;
+      height: 30px;
+      background: #C9B98A;
+      border-radius: 2px;
+      position: relative;
+    }
+    .flow-connector-line::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -2px;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 9px solid #C9B98A;
+    }
+    .flow-result {
+      border: 1.5px solid #DDB85F;
+      border-radius: 20px;
+      background: linear-gradient(165deg, #FCF1D6, #F5E2B4);
+      box-shadow: 0 14px 30px rgba(184, 134, 47, 0.18);
+      padding: 24px 22px;
+      text-align: center;
+    }
+    .flow-result img {
+      width: 34px;
+      margin: 0 auto 10px;
+      filter: drop-shadow(0 2px 4px rgba(184, 134, 47, 0.3));
+    }
+    .flow-result-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #B08A3A;
+      margin-bottom: 8px;
+    }
+    .flow-result-title {
+      font-family: 'Zen Old Mincho', serif;
+      font-weight: 700;
+      font-size: 19px;
+      color: #7A5A1E;
+      line-height: 1.5;
+      margin-bottom: 9px;
+    }
+    .flow-result-desc {
+      font-size: 12px;
+      color: #6B6657;
+      line-height: 1.75;
+      margin-bottom: 18px;
+    }
+    .btn-primary-inline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 32px;
+      border-radius: 999px;
+      background: #B8862F;
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      transition: background 0.2s ease;
+    }
+    .btn-primary-inline:hover { background: #A0741F; }
 
-    /* ============================================
-       4. 分蜂とは
-       ============================================ */
-    .about-section { background: var(--bg-main); }
-    .about-visual {
+    /* ===== 3 Steps ===== */
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .step-card {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: #FFFFFF;
+      border: 1px solid #F2EAD6;
+      border-radius: 18px;
+      box-shadow: 0 10px 28px rgba(150, 120, 55, 0.11);
+      padding: 22px 24px;
+    }
+    .step-card-title {
+      font-family: 'Zen Old Mincho', serif;
+      font-weight: 600;
+      font-size: 18px;
+      color: #38352C;
+      margin-bottom: 5px;
+    }
+    .step-card-desc {
+      font-size: 13px;
+      color: #6B6657;
+      line-height: 1.8;
+    }
+
+    /* ===== About / slideshow ===== */
+    .slideshow {
+      position: relative;
       aspect-ratio: 4 / 3;
-      background: var(--bg-cream);
-      border-radius: var(--radius-lg);
-      border: 2.5px solid var(--text);
-      box-shadow: 4px 4px 0 var(--text);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 56px; margin-bottom: 28px;
-      transform: rotate(-1.5deg);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 28px;
+      border: 1px solid #E7E0CE;
+      background: #E7DFC9;
+      box-shadow: 0 10px 26px rgba(120, 100, 50, 0.1);
     }
-    .about-title {
-      font-family: var(--font-base);
-      font-size: 24px; font-weight: 900; line-height: 1.5;
-      margin-bottom: 14px;
+    .slideshow img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.9s ease;
     }
-    .about-lead {
-      font-size: 15px; color: var(--text);
-      margin-bottom: 18px; font-weight: 500;
+    .slideshow-dots {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      z-index: 5;
+    }
+    .slideshow-dots button {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+      transition: background 0.3s ease;
     }
     .about-list {
       list-style: none;
-      display: flex; flex-direction: column; gap: 8px;
-      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      margin-bottom: 22px;
     }
     .about-list li {
-      padding-left: 22px; position: relative;
-      color: var(--text-soft); font-size: 13px;
+      padding-left: 22px;
+      position: relative;
+      color: #6B6657;
+      font-size: 13.5px;
+      line-height: 1.75;
     }
     .about-list li::before {
-      content: ''; position: absolute; left: 0; top: 10px;
-      width: 8px; height: 8px; background: var(--green);
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
+      background: #7C8466;
     }
-    .about-more {
-      display: inline-flex; align-items: center; gap: 6px;
-      color: var(--gold-deep); font-size: 13px; font-weight: 700;
+    .italic-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 16px;
+      color: #B8862F;
+      border-bottom: 1px solid #E3C57E;
+      padding-bottom: 2px;
     }
 
-    /* ============================================
-       4.5. X live feed
-       ============================================ */
-    .xfeed-section { background: transparent; }
-    .xfeed-wrap {
+    /* ===== X Voices ===== */
+    .voices-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .voice-card {
       background: #FFFFFF;
-      border: 2.5px solid var(--text);
-      border-radius: var(--radius-lg);
-      box-shadow: 4px 4px 0 var(--text);
-      padding: 14px;
-      transform: rotate(-0.5deg);
-      max-height: 540px;
-      overflow: hidden;
-      position: relative;
+      border: 1px solid #F2EAD6;
+      border-radius: 18px;
+      box-shadow: 0 10px 28px rgba(150, 120, 55, 0.11);
+      padding: 18px 20px;
     }
-    .xfeed-wrap .twitter-timeline,
-    .xfeed-wrap iframe {
-      max-width: 100% !important;
-    }
-    .xfeed-fallback {
-      display: flex; flex-direction: column; gap: 12px;
-    }
-    .xfeed-card {
-      background: #F7F9FA;
-      border: 1.5px solid var(--line);
-      border-radius: 14px;
-      padding: 14px;
-      font-size: 13px;
-      line-height: 1.7;
-    }
-    .xfeed-card .xfeed-meta {
-      font-size: 11px; color: var(--text-light);
-      margin-top: 8px;
-    }
-    .xfeed-card .xfeed-handle {
-      font-weight: 700; color: var(--text);
-    }
-    .xfeed-note {
-      text-align: center; margin-top: 24px;
-      font-size: 13px; color: var(--text-soft);
+    .voice-text {
+      font-size: 13.5px;
+      color: #4A463B;
       line-height: 1.85;
     }
-    .xfeed-note .link-pop {
-      background: var(--gold);
-      color: var(--text);
-      padding: 6px 14px;
-      border-radius: 999px;
-      border: 2px solid var(--text);
-      box-shadow: 2px 2px 0 var(--text);
-      font-weight: 800;
-      display: inline-block;
-      margin-top: 6px;
-      transform: rotate(-1.5deg);
+    .voice-meta {
+      font-size: 11px;
+      color: #9A9382;
+      margin-top: 10px;
+      letter-spacing: 0.02em;
+    }
+    .voice-handle { color: #7C8466; font-weight: 700; }
+
+    /* ===== Benefits ===== */
+    .benefits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+    .benefit-card {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      background: #FFFFFF;
+      border: 1px solid #F2EAD6;
+      border-radius: 18px;
+      box-shadow: 0 10px 28px rgba(150, 120, 55, 0.11);
+      padding: 18px 20px;
+    }
+    .benefit-num {
+      flex-shrink: 0;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1px solid #D8CDA8;
+      background: #FBF6E9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 20px;
+      color: #B8862F;
+    }
+    .benefit-title {
+      font-family: 'Zen Old Mincho', serif;
+      font-weight: 600;
+      font-size: 16px;
+      color: #38352C;
+      margin-bottom: 3px;
+    }
+    .benefit-desc {
+      font-size: 12.5px;
+      color: #6B6657;
+      line-height: 1.7;
     }
 
-    /* ============================================
-       5. 養蜂家のあなたへ
-       ============================================ */
-    .beekeeper-section {
-      background: linear-gradient(135deg, var(--bg-sky) 0%, var(--bg-sage) 100%);
+    /* ===== Honey portal ===== */
+    .honey-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .honey-card {
+      background: #FFFFFF;
+      border: 1px solid #F2EAD6;
+      border-radius: 18px;
+      box-shadow: 0 10px 28px rgba(150, 120, 55, 0.11);
+      overflow: hidden;
+    }
+    .honey-img {
+      aspect-ratio: 1 / 1;
+      background-image: repeating-linear-gradient(135deg, #F6F0E2, #F6F0E2 8px, #F1EAD8 8px, #F1EAD8 16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #EDE6D5;
+    }
+    .honey-img span {
+      font-family: monospace;
+      font-size: 9px;
+      color: #A8A18C;
+    }
+    .honey-info {
+      padding: 13px 14px 15px;
+    }
+    .honey-name {
+      font-family: 'Zen Old Mincho', serif;
+      font-weight: 600;
+      font-size: 14px;
+      color: #38352C;
+      margin-bottom: 3px;
+    }
+    .honey-meta {
+      font-size: 10.5px;
+      color: #9A9382;
+      letter-spacing: 0.02em;
+    }
+
+    /* ===== Worldwide ===== */
+    .worlds-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .world-card {
+      background: #FFFFFF;
+      border: 1px solid #F2EAD6;
+      border-radius: 18px;
+      box-shadow: 0 10px 28px rgba(150, 120, 55, 0.11);
+      padding: 16px 14px;
       text-align: center;
     }
-    .beekeeper-title {
-      font-family: var(--font-base);
-      font-size: 28px; font-weight: 900; margin-bottom: 10px;
-    }
-    .beekeeper-title em {
-      font-style: normal; color: var(--text);
-      background: var(--coral);
-      color: #FFF;
-      padding: 2px 12px; border-radius: 8px;
-      display: inline-block;
-      transform: rotate(-2deg);
-      box-shadow: 3px 3px 0 var(--text);
-    }
-    .beekeeper-lead {
-      font-size: 13px; color: var(--text-soft); margin-bottom: 32px;
-    }
-    .benefits {
-      display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px;
-    }
-    .benefit {
-      background: #FFF; padding: 20px 18px;
-      border-radius: var(--radius-lg);
-      border: 2.5px solid var(--text);
-      box-shadow: 4px 4px 0 var(--text);
-      display: flex; gap: 16px; align-items: center; text-align: left;
-    }
-    .benefits .benefit:nth-child(1) { transform: rotate(-1deg); }
-    .benefits .benefit:nth-child(2) { transform: rotate(1deg); }
-    .benefits .benefit:nth-child(3) { transform: rotate(-1.5deg); }
-    .benefit-icon {
-      flex-shrink: 0;
-      width: 56px; height: 56px;
-      background: var(--gold);
-      border: 2.5px solid var(--text);
+    .world-flag {
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 26px;
+      object-fit: cover;
+      border: 1px solid rgba(56, 53, 40, 0.1);
+      margin: 0 auto 10px;
+      display: block;
     }
-    .benefit-title { font-size: 15px; font-weight: 900; margin-bottom: 2px; }
-    .benefit-desc { font-size: 12px; color: var(--text-soft); line-height: 1.6; font-weight: 500; }
+    .world-name {
+      font-family: 'Zen Old Mincho', serif;
+      font-weight: 600;
+      font-size: 14px;
+      color: #38352C;
+      margin-bottom: 3px;
+    }
+    .world-info {
+      font-size: 10.5px;
+      color: #9A9382;
+    }
+    .worldwide-tagline {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .worldwide-tagline span {
+      font-family: 'Zen Old Mincho', serif;
+      font-weight: 600;
+      font-size: 18px;
+      color: #5C6347;
+      letter-spacing: 0.04em;
+      border-bottom: 2px solid #C8B98C;
+      padding-bottom: 5px;
+    }
 
-    /* ============================================
-       6. はちみつ
-       ============================================ */
-    .honey-section { background: var(--bg-main); }
-    .honey-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .honey-card {
-      background: #FFF; border-radius: var(--radius);
-      overflow: hidden;
-      border: 2.5px solid var(--text);
-      box-shadow: 3px 3px 0 var(--text);
+    /* ===== Mission ===== */
+    .mission-section {
+      padding: 62px 32px;
+      border-top: 1px solid #EDE6D5;
+      text-align: center;
     }
-    .honey-grid .honey-card:nth-child(odd) { transform: rotate(-1deg); }
-    .honey-grid .honey-card:nth-child(even) { transform: rotate(1.2deg); }
-    .honey-img {
-      aspect-ratio: 1 / 1; background: var(--bg-cream);
-      display: flex; align-items: center; justify-content: center; font-size: 42px;
-      border-bottom: 2px solid var(--text);
+    .mission-bee { width: 44px; display: inline-block; margin-bottom: 22px; }
+    .mission-h2 {
+      font-family: 'Zen Old Mincho', serif;
+      font-weight: 700;
+      font-size: 25px;
+      line-height: 1.7;
+      color: #38352C;
+      margin-bottom: 18px;
     }
-    .honey-body { padding: 12px 12px 14px; }
-    .honey-name { font-size: 13px; font-weight: 900; margin-bottom: 2px; }
-    .honey-meta { font-size: 10px; color: var(--text-soft); font-weight: 500; }
-    .honey-more { text-align: center; margin-top: 24px; }
-
-    /* ============================================
-       7. 世界では
-       ============================================ */
-    .world-section { background: var(--bg-cream); }
-    .world-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .world-card {
-      background: #FFF; padding: 14px 10px;
-      border-radius: var(--radius); text-align: center;
-      border: 2px solid var(--text);
-      box-shadow: 3px 3px 0 var(--text);
-    }
-    .world-grid .world-card:nth-child(odd) { transform: rotate(-1.5deg); }
-    .world-grid .world-card:nth-child(even) { transform: rotate(1.5deg); }
-    .world-flag { font-size: 24px; margin-bottom: 4px; }
-    .world-name { font-size: 12px; font-weight: 900; margin-bottom: 2px; }
-    .world-info { font-size: 10px; color: var(--text-soft); font-weight: 500; }
-    .world-message {
-      text-align: center; margin-top: 36px;
-      font-family: var(--font-base);
-      font-size: 22px; font-weight: 900;
-      color: var(--text);
-      background: var(--green);
-      padding: 12px 20px;
-      border: 2.5px solid var(--text);
-      border-radius: 999px;
-      box-shadow: 4px 4px 0 var(--text);
-      display: inline-block;
-      transform: rotate(-1.5deg);
-    }
-    .world-message-wrap { text-align: center; }
-
-    /* ============================================
-       8. 私たちについて
-       ============================================ */
-    .mission-section { background: #FFF; text-align: center; }
-    .mission-statement {
-      font-family: var(--font-base);
-      font-size: 24px; font-weight: 900; line-height: 1.6;
-      margin-bottom: 16px;
-    }
-    .mission-statement strong {
-      color: var(--text);
-      background: var(--gold);
-      padding: 2px 12px;
-      border-radius: 8px;
-      display: inline-block;
-      transform: rotate(-2deg);
-      box-shadow: 3px 3px 0 var(--text);
-    }
-    .mission-desc {
-      font-size: 13px; color: var(--text-soft);
-      margin: 0 auto 24px; line-height: 1.9;
+    .mission-h2 .accent { color: #B8862F; }
+    .mission-body {
+      font-size: 13.5px;
+      color: #6B6657;
+      line-height: 2;
+      max-width: 400px;
+      margin: 0 auto 26px;
     }
     .mission-links {
-      display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; font-size: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 15px;
     }
-    .mission-links a { color: var(--gold-deep); font-weight: 700; }
-
-    /* ============================================
-       9. SNS
-       ============================================ */
-    .sns-section { background: var(--bg-sage); text-align: center; }
-    .sns-buttons {
-      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 24px;
-    }
-    .sns-btn {
-      width: 56px; height: 56px; border-radius: 50%;
-      background: #FFF;
-      display: flex; align-items: center; justify-content: center; font-size: 22px;
-      border: 2.5px solid var(--text);
-      box-shadow: 3px 3px 0 var(--text);
-      transition: all 0.18s ease;
-    }
-    .sns-btn:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--text); }
-    .sns-btn:nth-child(odd) { transform: rotate(-3deg); }
-    .sns-btn:nth-child(even) { transform: rotate(3deg); }
-
-    /* ============================================
-       10. Footer
-       ============================================ */
-    .footer { background: #2C2C2C; color: #F8F1E4; padding: 40px 0 24px; }
-    .footer-logo-name {
-      font-family: var(--font-base);
-      font-size: 24px; font-weight: 900;
-      color: var(--gold); margin-bottom: 8px; letter-spacing: 0.04em;
-      display: inline-block;
-      transform: rotate(-2deg);
-    }
-    .footer-tagline { font-size: 12px; color: #BBB; line-height: 1.7; margin-bottom: 24px; }
-    .footer-heading {
-      font-size: 11px; font-weight: 700; color: #FFF;
-      margin-bottom: 12px; margin-top: 20px; letter-spacing: 0.1em;
-    }
-    .footer-list { list-style: none; }
-    .footer-list li { margin-bottom: 8px; }
-    .footer-list a { font-size: 12px; color: #BBB; }
-    .footer-bottom {
-      border-top: 1px solid #444;
-      padding-top: 16px; margin-top: 24px;
-      display: flex; justify-content: space-between;
-      font-size: 10px; color: #888;
+    .mission-links a {
+      color: #7C8466;
+      border-bottom: 1px solid #C9C2AD;
+      padding-bottom: 2px;
     }
 
-    /* ============================================
-       FAQ Section
-       ============================================ */
-    .faq-section { background: var(--bg-main); }
-    .faq-list { display: flex; flex-direction: column; gap: 16px; }
-    .faq-item {
-      background: #FFF;
-      border: 2.5px solid var(--text);
-      border-radius: var(--radius);
+    /* ===== FAQ ===== */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+    .faq-card {
+      background: #FFFFFF;
+      border: 1px solid #F2EAD6;
+      border-radius: 18px;
+      box-shadow: 0 10px 28px rgba(150, 120, 55, 0.11);
       padding: 20px 22px;
-      box-shadow: 3px 3px 0 var(--text);
     }
-    .faq-item:nth-child(odd) { transform: rotate(-0.5deg); }
-    .faq-item:nth-child(even) { transform: rotate(0.5deg); }
     .faq-q {
-      font-size: 15px; font-weight: 900;
-      color: var(--text);
-      margin-bottom: 8px;
+      font-family: 'Zen Old Mincho', serif;
+      font-weight: 600;
+      font-size: 15px;
+      color: #38352C;
+      margin-bottom: 9px;
+      padding-left: 26px;
+      position: relative;
+      line-height: 1.6;
+    }
+    .faq-q .faq-label {
+      position: absolute;
+      left: 0;
+      top: -1px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 19px;
+      color: #7C8466;
+    }
+    .faq-a {
+      font-size: 13px;
+      color: #6B6657;
+      line-height: 1.85;
       padding-left: 26px;
       position: relative;
     }
-    .faq-q::before {
-      content: 'Q';
-      position: absolute; left: 0; top: 0;
-      font-family: var(--font-display);
-      font-size: 17px; color: var(--gold-deep);
+    .faq-a .faq-label {
+      position: absolute;
+      left: 0;
+      top: -1px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 19px;
+      color: #B8862F;
     }
-    .faq-a {
-      font-size: 13px; color: var(--text-soft);
-      line-height: 1.85; font-weight: 500;
-      padding-left: 26px; position: relative;
+
+    /* ===== SNS ===== */
+    .sns-buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
     }
-    .faq-a::before {
-      content: 'A';
-      position: absolute; left: 0; top: 0;
-      font-family: var(--font-display);
-      font-size: 17px; color: var(--coral);
+    .sns-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1px solid #C2BBA4;
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 17px;
+      color: #5C6347;
+      transition: all 0.2s ease;
     }
+    .sns-btn:hover {
+      border-color: #7C8466;
+      background: #F4EFE0;
+    }
+
+    /* ===== Footer ===== */
+    .site-footer {
+      background: #3A3B30;
+      color: #E9E3D2;
+      padding: 46px 32px 26px;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 14px;
+    }
+    .footer-brand img { width: 31px; }
+    .footer-brand-name {
+      font-family: 'Zen Old Mincho', serif;
+      font-weight: 600;
+      font-size: 20px;
+      letter-spacing: 0.06em;
+      color: #E3D6B0;
+    }
+    .footer-desc {
+      font-size: 12px;
+      color: #A8A290;
+      line-height: 1.85;
+      margin-bottom: 28px;
+    }
+    .footer-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px 16px;
+      margin-bottom: 28px;
+    }
+    .footer-col-head {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      color: #C9B98A;
+      margin-bottom: 11px;
+    }
+    .footer-col-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .footer-col-list a {
+      font-size: 12px;
+      color: #A8A290;
+    }
+    .footer-bottom {
+      border-top: 1px solid #50503F;
+      padding-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #7E7C68;
+      letter-spacing: 0.03em;
+    }
+
+    /* ===== misc ===== */
+    .text-center { text-align: center; }
+    .mt-8  { margin-top: 8px; }
+    .mt-12 { margin-top: 12px; }
+    .mt-14 { margin-top: 14px; }
+    .mt-26 { margin-top: 26px; }
+    .mt-30 { margin-top: 30px; }
+    .mt-34 { margin-top: 34px; }
+    .mb-12 { margin-bottom: 12px; }
+    .mb-30 { margin-bottom: 30px; }
+    .mb-32 { margin-bottom: 32px; }
+    .mb-34 { margin-bottom: 34px; }
   </style>
 
-  <!-- ===== SEO: JSON-LD 構造化データ ===== -->
+  <!-- ===== SEO: JSON-LD ===== -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -895,7 +997,7 @@
             "name": "分蜂とは何ですか？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "分蜂（ぶんぽう）とは、ミツバチが群れを分けて新しい巣を探す自然現象です。女王蜂と働き蜂の一部が巣を離れ、木の枝や軒下などに一時的に集まります。数時間〜数日で移動するため、攻撃しない限りほとんど危険はありません。"
+              "text": "ミツバチが群れを分けて新しい巣を探す自然現象です。女王蜂と働き蜂の一部が巣を離れ、木の枝や軒下などに一時的に集まります。数時間〜数日で自然に移動するため、攻撃しない限りほとんど危険はありません。"
             }
           },
           {
@@ -903,7 +1005,7 @@
             "name": "分蜂を見つけたら危険ですか？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "分蜂中のミツバチはお腹いっぱいに蜜を蓄えており、守るべき巣もないため非常に温和です。直接触ったり、脅かしたりしなければほとんど刺しません。静かに距離をとり、Help Beeへ報告してください。"
+              "text": "分蜂中のミツバチはお腹いっぱいに蜜を蓄え、守るべき巣もないため非常に温和です。直接触ったり脅かしたりしなければ、ほとんど刺しません。静かに距離をとってHelp Beeへ報告してください。"
             }
           },
           {
@@ -911,7 +1013,7 @@
             "name": "報告は無料ですか？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "はい、分蜂の目撃報告は完全無料です。写真と場所を送るだけで1〜2分で完了します。"
+              "text": "はい、完全無料です。写真と場所を送るだけで1〜2分で完了します。"
             }
           },
           {
@@ -919,23 +1021,23 @@
             "name": "養蜂家でなくても使えますか？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "もちろんです。分蜂の目撃報告はどなたでも無料でご利用いただけます。「大量のハチを見かけた」「これって分蜂？」と思ったらお気軽に報告してください。"
+              "text": "もちろんです。「大量のハチを見かけた」「これって分蜂？」と思ったら、どなたでもお気軽に報告してください。"
             }
           },
           {
             "@type": "Question",
-            "name": "養蜂家として登録するにはどうすればいいですか？",
+            "name": "Help Bee は全国対応ですか？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "登録フォームから氏名・活動地域・連絡先を入力するだけです。登録は無料で、分蜂群の入手機会やはちみつ販売ページの掲載などの特典があります。"
+              "text": "はい、全国どこからでも報告・登録いただけます。分蜂は春〜初夏にかけて全国各地で起こる現象です。"
             }
           },
           {
             "@type": "Question",
-            "name": "Help Beeは日本全国で使えますか？",
+            "name": "養蜂家として登録するには？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "はい、全国どこからでも報告・登録いただけます。分蜂は春〜初夏にかけて全国各地で起こる現象です。登録養蜂家が近くにいない地域でも、情報を蓄積することで将来的に対応できる体制を目指しています。"
+              "text": "登録フォームから氏名・活動地域・連絡先を入力するだけです。登録は無料で、地域の分蜂群の入手機会やはちみつ販売ページの掲載などの特典があります。"
             }
           }
         ]
@@ -946,475 +1048,523 @@
 </head>
 <body>
 
+<div class="page-wrap">
 
+  <!-- Fixed watercolor background -->
+  <div class="bg-fixed" aria-hidden="true"></div>
 
+  <!-- Flying bee field -->
+  <div class="bee-field" id="beeField" aria-hidden="true"></div>
 
-<!-- Global scene background (full-width, cycling) -->
-<div class="bg-scene-cycle" id="bgSceneCycle">
-  <div class="scene-layer active" data-scene="住宅街" style="background-image: url('images/hachinowa_bg01_1.jpg');"></div>
-  <div class="scene-layer" data-scene="公園" style="background-image: url('images/hachinowa_bg02_2.jpg');"></div>
-  <div class="scene-layer" data-scene="街" style="background-image: url('images/hachinowa_bg03_2.jpg');"></div>
-</div>
+  <!-- Editorial center column -->
+  <div class="center-col">
 
-<!-- Frosted glass on center column -->
-<div class="center-glass"></div>
-
-<!-- ============================================
-     LEFT FIXED PANEL (scenes + CTA)
-     ============================================ -->
-<aside class="side-panel side-left">
-  <!-- Scene name label -->
-  <div class="scene-name" id="leftSceneName">いまの背景：住宅街</div>
-  <!-- Side CTA -->
-  <div class="side-cta">
-    <span class="side-cta-label">CLICK HERE !</span>
-    <a href="#" class="btn btn-primary">📢 分蜂を報告</a>
-    <a href="#" class="btn btn-green">🐝 養蜂家として登録</a>
-  </div>
-</aside>
-
-<!-- ============================================
-     RIGHT FIXED PANEL (scenes only)
-     ============================================ -->
-<aside class="side-panel side-right">
-  <div class="scene-name" id="rightSceneName" style="background: rgba(255,254,246,0.85);">どこでも、分蜂は起こる</div>
-</aside>
-
-<!-- ============================================
-     CENTER: Sticky header + sections + footer
-     ============================================ -->
-<header class="header">
-  <div class="frame">
-    <div class="header-inner">
-      <div>
-        <div class="logo-name">Help Bee</div>
-        <div class="logo-sub">全国蜜蜂レスキューネットワーク</div>
+    <!-- ===== HEADER ===== -->
+    <header class="site-header">
+      <div class="site-header-inner">
+        <div class="header-logo">
+          <img src="images/bee-sage.svg" alt="" class="bee-icon">
+          <div>
+            <img src="images/helpbee_wordmark.svg" alt="Help Bee" class="header-wordmark">
+            <div class="header-tagline">全国蜜蜂レスキューネットワーク</div>
+          </div>
+        </div>
+        <nav class="header-nav">
+          <a href="#flow">How it works</a>
+        </nav>
       </div>
-      <a href="#" class="header-mini-link">仕組み →</a>
-    </div>
-  </div>
-</header>
+    </header>
 
-<!-- 1. HERO -->
-<section class="frame-section hero">
-  <div class="frame">
-    <div class="hero-visual"><img src="images/helpbee_logo.svg" alt="Help Bee ロゴ"></div>
-    <h1 class="hero-headline">
-      ハチの大群<span class="pop">!?</span><br>
-      それ、<em>分蜂かも！</em>
-    </h1>
-    <p class="hero-sub">
-      困った人と、保護したい養蜂家をつなぐ全国ネットワーク。<br>
-      報告は無料、1分で完了。
-    </p>
-    <div class="hero-cta">
-      <a href="#" class="btn btn-primary btn-large">分蜂を報告する（無料）</a>
-      <a href="#" class="btn btn-secondary btn-large">養蜂家として登録</a>
-    </div>
-    <p class="hero-note">🔒 個人情報は運営のみ保持。公開される情報は最小限です。</p>
-  </div>
-</section>
-
-<!-- 2. FLOWCHART -->
-<section class="frame-section flowchart-section">
-  <div class="frame">
-    <div class="section-head">
-      <span class="section-eyebrow">CHECK</span>
-      <h2 class="section-title">これは何の蜂？</h2>
-      <span class="section-divider"></span>
-      <p class="section-lead">迷ったら、このフローで確認してください。</p>
-    </div>
-    <div class="flowchart-wrap">
-      <div class="flowchart-placeholder">
-        <strong>判定フローチャート</strong>
-        <em>flowchart_1080.svg を埋め込み</em>
+    <!-- ===== HERO ===== -->
+    <section class="hero section-center">
+      <img src="images/helpbee_logo_color.svg" alt="Help Bee ロゴ" class="hero-logo">
+      <div class="eyebrow">Save the swarm</div>
+      <h1 class="hero-h1">
+        ハチの大群に出会ったら。<br>
+        それは<span class="accent">分蜂</span>かもしれません。
+      </h1>
+      <p class="hero-sub">
+        困っている人と、保護したい養蜂家をつなぐ全国ネットワーク。<br>
+        報告は無料、約1分で完了します。
+      </p>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary">分蜂を報告する（無料）</a>
+        <a href="#" class="btn-secondary">養蜂家として登録</a>
       </div>
-    </div>
-  </div>
-</section>
+      <p class="hero-note">個人情報は運営のみが保持し、公開される情報は最小限です。</p>
+    </section>
 
-<!-- 3. 3 STEPS -->
-<section class="frame-section steps-section">
-  <div class="frame">
-    <div class="section-head">
-      <span class="section-eyebrow">HOW IT WORKS</span>
-      <h2 class="section-title">3ステップで解決</h2>
-      <span class="section-divider"></span>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card">
-        <div class="step-num">1</div>
+    <!-- ===== FLOW ===== -->
+    <section id="flow" class="section">
+      <div class="section-center mb-34">
+        <div class="eyebrow">Check</div>
+        <h2 class="section-heading">これは、何の蜂？</h2>
+        <div class="bee-divider">
+          <span></span>
+          <img src="images/bee-honey.svg" alt="">
+          <span></span>
+        </div>
+        <p class="section-lead">迷ったら、このフローで確認してください。</p>
+      </div>
+
+      <!-- Start -->
+      <div class="flow-start">
+        <span>Start ― 大量のハチを見つけた</span>
+      </div>
+
+      <!-- Legend + connector -->
+      <div class="flow-legend">
+        <div class="arrow-line"></div>
+        <div class="flow-legend-inner">
+          <span class="chip-yes">はい</span>
+          <span>なら下へ。</span>
+          <span class="chip-no">いいえ</span>
+          <span>はその場の案内へ。</span>
+        </div>
+      </div>
+
+      <!-- Q1 -->
+      <div class="flow-card">
+        <div class="flow-card-top">
+          <div class="step-badge">1</div>
+          <p class="flow-question">ハチが「ぶどうの房」のように、丸いかたまりになっている？</p>
+        </div>
+        <div class="flow-answers">
+          <div class="flow-yes">はい</div>
+          <div class="flow-no-group">
+            <div class="flow-no-chip">いいえ</div>
+            <p class="flow-no-text">バラバラに飛び回る／壁・地面の一か所に出入りしているなら、<b>定着した巣</b>かも。まずはご相談を。</p>
+          </div>
+        </div>
+      </div>
+      <div class="flow-connector"><div class="flow-connector-line"></div></div>
+
+      <!-- Q2 -->
+      <div class="flow-card">
+        <div class="flow-card-top">
+          <div class="step-badge">2</div>
+          <p class="flow-question">体は丸みがあって毛深く、黄土色〜こげ茶色をしている？</p>
+        </div>
+        <div class="flow-answers">
+          <div class="flow-yes">はい</div>
+          <div class="flow-no-group">
+            <div class="flow-no-chip">いいえ</div>
+            <p class="flow-no-text">細身でつやがあり、黒×黄のはっきりした縞なら、<b>スズメバチ・アシナガバチ</b>かも。専門の駆除業者へ。</p>
+          </div>
+        </div>
+      </div>
+      <div class="flow-connector"><div class="flow-connector-line"></div></div>
+
+      <!-- Q3 -->
+      <div class="flow-card">
+        <div class="flow-card-top">
+          <div class="step-badge">3</div>
+          <p class="flow-question">木の枝や軒下などに、一時的にぶら下がっている？</p>
+        </div>
+        <div class="flow-answers">
+          <div class="flow-yes">はい</div>
+          <div class="flow-no-group">
+            <div class="flow-no-chip">いいえ</div>
+            <p class="flow-no-text">壁の中や地面の中などに巣ができているなら、<b>定着した巣</b>の可能性。まずはご相談を。</p>
+          </div>
+        </div>
+      </div>
+      <div class="flow-connector"><div class="flow-connector-line"></div></div>
+
+      <!-- Result -->
+      <div class="flow-result">
+        <img src="images/bee-cream.svg" alt="">
+        <div class="flow-result-label">Result</div>
+        <p class="flow-result-title">分蜂（ミツバチ）の可能性が高いです</p>
+        <p class="flow-result-desc">そっと距離をとって、Help Bee へ報告してください。<br>近くの養蜂家が保護に向かいます。</p>
+        <a href="#" class="btn-primary-inline">分蜂を報告する（無料）</a>
+      </div>
+    </section>
+
+    <!-- ===== 3 STEPS ===== -->
+    <section class="section">
+      <div class="section-center mb-34">
+        <div class="eyebrow">How it works</div>
+        <h2 class="section-heading">3ステップで解決</h2>
+      </div>
+      <div class="steps-list">
+        <div class="step-card">
+          <div class="step-badge">1</div>
+          <div>
+            <h3 class="step-card-title">報告する</h3>
+            <p class="step-card-desc">現場の写真と場所を送るだけ。所要時間 1〜2分。</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-badge">2</div>
+          <div>
+            <h3 class="step-card-title">養蜂家に届く</h3>
+            <p class="step-card-desc">近くの登録養蜂家に、お知らせが届きます。</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-badge">3</div>
+          <div>
+            <h3 class="step-card-title">レスキュー</h3>
+            <p class="step-card-desc">養蜂家が駆けつけて、保護してくれます。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="section">
+      <!-- Slideshow -->
+      <div class="slideshow" id="slideshow">
+        <img src="images/bunpo-1.jpg" alt="分蜂のようす" id="slide0" style="z-index:2;opacity:1;">
+        <img src="images/bunpo-2.jpg" alt="分蜂のようす" id="slide1" style="z-index:1;opacity:0;">
+        <img src="images/bunpo-3.jpg" alt="分蜂のようす" id="slide2" style="z-index:1;opacity:0;">
+        <div class="slideshow-dots" id="slideDots">
+          <button type="button" aria-label="写真1" data-slide="0" style="background:#FFFFFF;"></button>
+          <button type="button" aria-label="写真2" data-slide="1" style="background:rgba(255,255,255,0.55);"></button>
+          <button type="button" aria-label="写真3" data-slide="2" style="background:rgba(255,255,255,0.55);"></button>
+        </div>
+      </div>
+
+      <div class="eyebrow">About swarming</div>
+      <h2 class="section-heading" style="font-size:23px;margin-bottom:12px;">分蜂って、なんですか？</h2>
+      <p style="font-size:14.5px;color:#4A463B;margin-bottom:18px;line-height:1.95;">ハチが集団で「家を引っ越し」する、自然の営みです。</p>
+      <ul class="about-list">
+        <li>数時間〜数日で、自然にいなくなります</li>
+        <li>お腹に蜜を蓄え、ハチはとても穏やかです</li>
+        <li>攻撃的になるのは、仲間や巣に危険がせまったとき</li>
+        <li>駆除するよりも、保護してあげてください</li>
+      </ul>
+      <a href="#" class="italic-link">もっと詳しく知る →</a>
+    </section>
+
+    <!-- ===== X VOICES ===== -->
+    <section class="section">
+      <div class="section-center mb-32">
+        <div class="eyebrow">Real voices</div>
+        <h2 class="section-heading" style="font-size:24px;">いま、X で分蜂が話題に</h2>
+        <p class="section-lead">困っている人の声が、いまも上がっています。</p>
+      </div>
+      <div class="voices-list">
+        <div class="voice-card">
+          <p class="voice-text">庭の木にハチが大量に集まってる…数百匹はいる…これってミツバチですか？どうしたらいい。</p>
+          <div class="voice-meta"><span class="voice-handle">@user_garden_help</span> ・ 2時間前 ・ X</div>
+        </div>
+        <div class="voice-card">
+          <p class="voice-text">家の軒下にぶどう状の蜂の塊。これ分蜂ですよね？近所の養蜂家さんに連絡したいけれど、誰に頼めばいいんだろう。</p>
+          <div class="voice-meta"><span class="voice-handle">@suzu_bee</span> ・ 4時間前 ・ X</div>
+        </div>
+        <div class="voice-card">
+          <p class="voice-text">公園で見たことない蜂の群れ…子どもも怖がってる。駆除以外の方法ってあるんですか？</p>
+          <div class="voice-meta"><span class="voice-handle">@park_mom</span> ・ 6時間前 ・ X</div>
+        </div>
+      </div>
+      <p class="text-center mt-26" style="font-size:13px;color:#6B6657;">
+        あなたも見つけたら、<a href="#" style="color:#B8862F;border-bottom:1px solid #E3C57E;padding-bottom:1px;font-weight:700;">Help Bee へ報告</a>
+      </p>
+    </section>
+
+    <!-- ===== FOR BEEKEEPERS ===== -->
+    <section class="section section-warm section-center">
+      <div class="eyebrow">For beekeepers</div>
+      <h2 class="section-heading mb-12">分蜂群を、<span style="color:#B26A4F;">無料</span>で。</h2>
+      <p style="font-size:13px;color:#6B6657;margin-bottom:30px;">捕獲してくださる養蜂家を募集しています。</p>
+      <div class="benefits-list">
+        <div class="benefit-card">
+          <div class="benefit-num">i</div>
+          <div>
+            <h4 class="benefit-title">分蜂群を無料で</h4>
+            <p class="benefit-desc">登録するだけで、地域の分蜂群を入手できます。</p>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-num">ii</div>
+          <div>
+            <h4 class="benefit-title">蜂蜜販売を掲載</h4>
+            <p class="benefit-desc">あなたの販売ページを、サイトでご紹介します。</p>
+          </div>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-num">iii</div>
+          <div>
+            <h4 class="benefit-title">全国ネットワーク</h4>
+            <p class="benefit-desc">同じ志の養蜂家と、つながりが広がります。</p>
+          </div>
+        </div>
+      </div>
+      <a href="#" class="btn-sage">養蜂家として登録する</a>
+    </section>
+
+    <!-- ===== HONEY PORTAL ===== -->
+    <section class="section">
+      <div class="section-center mb-32">
+        <div class="eyebrow">Honey portal</div>
+        <h2 class="section-heading" style="font-size:24px;">保護した養蜂家の、はちみつ</h2>
+        <p class="section-lead">ハチにやさしい選択を、買い物で応援。</p>
+      </div>
+      <div class="honey-grid">
+        <div class="honey-card">
+          <div class="honey-img"><span>product.jpg</span></div>
+          <div class="honey-info">
+            <p class="honey-name">かえるやはちみつ</p>
+            <p class="honey-meta">札幌 / アカシア・百花</p>
+          </div>
+        </div>
+        <div class="honey-card">
+          <div class="honey-img"><span>product.jpg</span></div>
+          <div class="honey-info">
+            <p class="honey-name">養蜂家 B</p>
+            <p class="honey-meta">地域 / 商品名</p>
+          </div>
+        </div>
+        <div class="honey-card">
+          <div class="honey-img"><span>product.jpg</span></div>
+          <div class="honey-info">
+            <p class="honey-name">養蜂家 C</p>
+            <p class="honey-meta">地域 / 商品名</p>
+          </div>
+        </div>
+        <div class="honey-card">
+          <div class="honey-img"><span>product.jpg</span></div>
+          <div class="honey-info">
+            <p class="honey-name">養蜂家 D</p>
+            <p class="honey-meta">地域 / 商品名</p>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-26">
+        <a href="#" class="italic-link">もっと見る →</a>
+      </div>
+    </section>
+
+    <!-- ===== WORLDWIDE ===== -->
+    <section class="section section-warm">
+      <div class="section-center mb-30">
+        <div class="eyebrow">Worldwide</div>
+        <h2 class="section-heading" style="font-size:24px;">世界では、もう始まっています</h2>
+        <p class="section-lead">同じ仕組みは、すでに各国で運営中。</p>
+      </div>
+      <div class="worlds-grid">
+        <div class="world-card">
+          <img src="images/flag-us.svg" alt="US" class="world-flag">
+          <div class="world-name">Swarmed</div>
+          <div class="world-info">登録 10,000人超</div>
+        </div>
+        <div class="world-card">
+          <img src="images/flag-uk.svg" alt="UK" class="world-flag">
+          <div class="world-name">BBKA</div>
+          <div class="world-info">全国協会と連携</div>
+        </div>
+        <div class="world-card">
+          <img src="images/flag-de.svg" alt="DE" class="world-flag">
+          <div class="world-name">Mellifera</div>
+          <div class="world-info">非営利・オープン</div>
+        </div>
+        <div class="world-card">
+          <img src="images/flag-fr.svg" alt="FR" class="world-flag">
+          <div class="world-name">SOS Essaim</div>
+          <div class="world-info">登録 5,500人</div>
+        </div>
+        <div class="world-card">
+          <img src="images/flag-au.svg" alt="AU" class="world-flag">
+          <div class="world-name">SwarmPatrol</div>
+          <div class="world-info">SMS 通知</div>
+        </div>
+        <div class="world-card">
+          <img src="images/flag-br.svg" alt="BR" class="world-flag">
+          <div class="world-name">Infobee</div>
+          <div class="world-info">公的機関が運営</div>
+        </div>
+      </div>
+      <div class="worldwide-tagline">
+        <span>日本でも、いま始めます。</span>
+      </div>
+    </section>
+
+    <!-- ===== MISSION ===== -->
+    <section class="mission-section">
+      <img src="images/bee-sage.svg" alt="" class="mission-bee">
+      <div class="eyebrow">About us</div>
+      <h2 class="mission-h2">駆除ではなく、<br><span class="accent">保護</span>を選べる社会へ。</h2>
+      <p class="mission-body">
+        Help Bee は、札幌で立ち上げた市民発の取り組みです。<br>
+        小さく始めて、全国へ。
+      </p>
+      <div class="mission-links">
+        <a href="#">利用規約</a>
+        <a href="#">プライバシーポリシー</a>
+        <a href="#">お問い合わせ</a>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="section">
+      <div class="section-center mb-32">
+        <div class="eyebrow">FAQ</div>
+        <h2 class="section-heading" style="font-size:24px;">よくある質問</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-card">
+          <h3 class="faq-q"><span class="faq-label">Q</span>分蜂とは何ですか？</h3>
+          <p class="faq-a"><span class="faq-label">A</span>ミツバチが群れを分けて新しい巣を探す自然現象です。女王蜂と働き蜂の一部が巣を離れ、木の枝や軒下などに一時的に集まります。数時間〜数日で自然に移動するため、攻撃しない限りほとんど危険はありません。</p>
+        </div>
+        <div class="faq-card">
+          <h3 class="faq-q"><span class="faq-label">Q</span>分蜂を見つけたら危険ですか？</h3>
+          <p class="faq-a"><span class="faq-label">A</span>分蜂中のミツバチはお腹いっぱいに蜜を蓄え、守るべき巣もないため非常に温和です。直接触ったり脅かしたりしなければ、ほとんど刺しません。静かに距離をとってHelp Beeへ報告してください。</p>
+        </div>
+        <div class="faq-card">
+          <h3 class="faq-q"><span class="faq-label">Q</span>報告は無料ですか？</h3>
+          <p class="faq-a"><span class="faq-label">A</span>はい、完全無料です。写真と場所を送るだけで 1〜2分で完了します。</p>
+        </div>
+        <div class="faq-card">
+          <h3 class="faq-q"><span class="faq-label">Q</span>養蜂家でなくても使えますか？</h3>
+          <p class="faq-a"><span class="faq-label">A</span>もちろんです。「大量のハチを見かけた」「これって分蜂？」と思ったら、どなたでもお気軽に報告してください。</p>
+        </div>
+        <div class="faq-card">
+          <h3 class="faq-q"><span class="faq-label">Q</span>Help Bee は全国対応ですか？</h3>
+          <p class="faq-a"><span class="faq-label">A</span>はい、全国どこからでも報告・登録いただけます。分蜂は春〜初夏にかけて全国各地で起こる現象です。</p>
+        </div>
+        <div class="faq-card">
+          <h3 class="faq-q"><span class="faq-label">Q</span>養蜂家として登録するには？</h3>
+          <p class="faq-a"><span class="faq-label">A</span>登録フォームから氏名・活動地域・連絡先を入力するだけです。登録は無料で、地域の分蜂群の入手機会やはちみつ販売ページの掲載などの特典があります。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SNS ===== -->
+    <section class="section section-center" style="padding-bottom:58px;">
+      <div class="eyebrow">Follow us</div>
+      <h2 class="section-heading" style="font-size:20px;margin-bottom:22px;">お知らせ・最新情報</h2>
+      <div class="sns-buttons">
+        <a href="#" class="sns-btn">X</a>
+        <a href="#" class="sns-btn">@</a>
+        <a href="#" class="sns-btn">○</a>
+        <a href="#" class="sns-btn">文</a>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <img src="images/bee-cream.svg" alt="">
+        <span class="footer-brand-name">Help Bee</span>
+      </div>
+      <p class="footer-desc">全国蜜蜂レスキューネットワーク<br>蜂と人の共助の輪を、いっしょに。</p>
+      <div class="footer-cols">
         <div>
-          <h3 class="step-title">報告する</h3>
-          <p class="step-desc">現場の写真と場所を送るだけ。所要時間1〜2分。</p>
+          <h4 class="footer-col-head">Service</h4>
+          <ul class="footer-col-list">
+            <li><a href="#">分蜂を報告</a></li>
+            <li><a href="#">養蜂家として登録</a></li>
+            <li><a href="#">はちみつポータル</a></li>
+          </ul>
         </div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">2</div>
         <div>
-          <h3 class="step-title">養蜂家に届く</h3>
-          <p class="step-desc">近くの登録養蜂家にお知らせが届きます。</p>
+          <h4 class="footer-col-head">About</h4>
+          <ul class="footer-col-list">
+            <li><a href="#">私たちについて</a></li>
+            <li><a href="#">活動報告</a></li>
+            <li><a href="#">お問い合わせ</a></li>
+          </ul>
         </div>
       </div>
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <div>
-          <h3 class="step-title">レスキュー</h3>
-          <p class="step-desc">養蜂家が駆けつけて、保護してくれます。</p>
-        </div>
+      <div class="footer-bottom">
+        <span>© 2026 Help Bee</span>
+        <span>helpbee.jp</span>
       </div>
-    </div>
-  </div>
-</section>
+    </footer>
 
-<!-- 4. 分蜂とは -->
-<section class="frame-section about-section">
-  <div class="frame">
-    <div class="about-visual">🌸 + 🐝</div>
-    <span class="section-eyebrow">ABOUT SWARMING</span>
-    <h2 class="about-title">分蜂って、なんですか？</h2>
-    <p class="about-lead">ハチが集団で「家を引っ越し」する自然現象です。</p>
-    <ul class="about-list">
-      <li>数時間〜数日でいなくなります</li>
-      <li>お腹に蜜を蓄え、ハチはとても穏やか</li>
-      <li>攻撃的になるのは仲間や巣に危険がせまったとき</li>
-      <li>駆除するよりも、保護してあげて</li>
-    </ul>
-    <a href="#" class="about-more">→ もっと詳しく知る</a>
-  </div>
-</section>
+  </div><!-- /center-col -->
+</div><!-- /page-wrap -->
 
-<!-- 4.5. Xライブフィード -->
-<section class="frame-section xfeed-section">
-  <div class="frame">
-    <div class="section-head">
-      <span class="section-eyebrow">REAL VOICES</span>
-      <h2 class="section-title">いま、Xで<br>分蜂が話題</h2>
-      <span class="section-divider"></span>
-      <p class="section-lead">困ってる人の声が、いまもXに上がっています。</p>
-    </div>
-    <div class="xfeed-wrap">
-      <!-- X公式タイムライン（Help Bee公式Xアカウントを設定する想定） -->
-      <a class="twitter-timeline"
-         data-tweet-limit="4"
-         data-chrome="noheader nofooter noborders transparent"
-         data-theme="light"
-         data-link-color="#C99F1F"
-         href="https://twitter.com/Twitter">
-        最新の分蜂ポストを読み込み中…
-      </a>
-
-      <!-- フォールバック（ウィジェット失敗時に見える） -->
-      <div class="xfeed-fallback" id="xfeedFallback">
-        <div class="xfeed-card">
-          庭の木にハチが大量に集まってる…数百匹はいる…これってミツバチですか？どうしたらいい😢
-          <div class="xfeed-meta"><span class="xfeed-handle">@user_garden_help</span> · 2時間前 · X</div>
-        </div>
-        <div class="xfeed-card">
-          家の軒下にぶどう状の蜂の塊。これ分蜂ですよね？近所の養蜂家さんに連絡したいけど誰に頼めばいいんだろう
-          <div class="xfeed-meta"><span class="xfeed-handle">@suzu_bee</span> · 4時間前 · X</div>
-        </div>
-        <div class="xfeed-card">
-          公園で見たことない蜂の群れ…子供も怖がってる。駆除以外の方法ってあるんですか？
-          <div class="xfeed-meta"><span class="xfeed-handle">@park_mom</span> · 6時間前 · X</div>
-        </div>
-      </div>
-    </div>
-    <p class="xfeed-note">
-      あなたも見つけたら、<br>
-      <a href="#" class="link-pop">📢 Help Beeへ報告</a>
-    </p>
-  </div>
-</section>
-
-<!-- 5. 養蜂家のあなたへ -->
-<section class="frame-section beekeeper-section">
-  <div class="frame">
-    <span class="section-eyebrow">FOR BEEKEEPERS</span>
-    <h2 class="beekeeper-title">分蜂群を、<em>無料</em>で。</h2>
-    <p class="beekeeper-lead">捕獲できる方を、募集しています。</p>
-    <div class="benefits">
-      <div class="benefit">
-        <div class="benefit-icon">🐝</div>
-        <div>
-          <h4 class="benefit-title">分蜂群を無料で</h4>
-          <p class="benefit-desc">登録するだけで、地域の分蜂群を入手できます。</p>
-        </div>
-      </div>
-      <div class="benefit">
-        <div class="benefit-icon">🍯</div>
-        <div>
-          <h4 class="benefit-title">蜂蜜販売を掲載</h4>
-          <p class="benefit-desc">あなたの販売ページをサイトでご紹介。</p>
-        </div>
-      </div>
-      <div class="benefit">
-        <div class="benefit-icon">🤝</div>
-        <div>
-          <h4 class="benefit-title">全国ネットワーク</h4>
-          <p class="benefit-desc">同じ志の養蜂家と、つながりが広がります。</p>
-        </div>
-      </div>
-    </div>
-    <a href="#" class="btn btn-green btn-large" style="width:100%;">養蜂家として登録</a>
-  </div>
-</section>
-
-<!-- 6. はちみつポータル -->
-<section class="frame-section honey-section">
-  <div class="frame">
-    <div class="section-head">
-      <span class="section-eyebrow">HONEY PORTAL</span>
-      <h2 class="section-title">保護した養蜂家の、<br>はちみつ</h2>
-      <span class="section-divider"></span>
-      <p class="section-lead">ハチに優しい選択を、買い物で応援。</p>
-    </div>
-    <div class="honey-grid">
-      <div class="honey-card"><div class="honey-img">🍯</div><div class="honey-body"><p class="honey-name">かえるやはちみつ</p><p class="honey-meta">札幌 / アカシア・百花</p></div></div>
-      <div class="honey-card"><div class="honey-img">🍯</div><div class="honey-body"><p class="honey-name">養蜂家B</p><p class="honey-meta">地域 / 商品名</p></div></div>
-      <div class="honey-card"><div class="honey-img">🍯</div><div class="honey-body"><p class="honey-name">養蜂家C</p><p class="honey-meta">地域 / 商品名</p></div></div>
-      <div class="honey-card"><div class="honey-img">🍯</div><div class="honey-body"><p class="honey-name">養蜂家D</p><p class="honey-meta">地域 / 商品名</p></div></div>
-    </div>
-    <div class="honey-more"><a href="#" class="about-more">→ もっと見る</a></div>
-  </div>
-</section>
-
-<!-- 7. 世界では -->
-<section class="frame-section world-section">
-  <div class="frame">
-    <div class="section-head">
-      <span class="section-eyebrow">WORLDWIDE</span>
-      <h2 class="section-title">世界では、<br>もう始まっています</h2>
-      <span class="section-divider"></span>
-      <p class="section-lead">同類の仕組みは、すでに世界各国で運営中。</p>
-    </div>
-    <div class="world-grid">
-      <div class="world-card"><div class="world-flag">🇺🇸</div><div class="world-name">Swarmed</div><div class="world-info">登録10,000人超</div></div>
-      <div class="world-card"><div class="world-flag">🇬🇧</div><div class="world-name">BBKA</div><div class="world-info">全国協会と連携</div></div>
-      <div class="world-card"><div class="world-flag">🇩🇪</div><div class="world-name">Mellifera</div><div class="world-info">非営利・オープン</div></div>
-      <div class="world-card"><div class="world-flag">🇫🇷</div><div class="world-name">SOS Essaim</div><div class="world-info">登録 5,500人</div></div>
-      <div class="world-card"><div class="world-flag">🇦🇺</div><div class="world-name">SwarmPatrol</div><div class="world-info">SMS通知</div></div>
-      <div class="world-card"><div class="world-flag">🇧🇷</div><div class="world-name">Infobee</div><div class="world-info">公的機関運営</div></div>
-    </div>
-    <div class="world-message-wrap"><span class="world-message">日本でも、いま始めます！</span></div>
-  </div>
-</section>
-
-<!-- 8. 私たちについて -->
-<section class="frame-section mission-section">
-  <div class="frame">
-    <span class="section-eyebrow">ABOUT US</span>
-    <h2 class="mission-statement">駆除ではなく、<br><strong>保護</strong>を選べる社会へ。</h2>
-    <p class="mission-desc">Help Beeは、札幌で立ち上げた市民発の取り組みです。<br>小さく始めて、全国へ。</p>
-    <div class="mission-links">
-      <a href="#">利用規約</a>
-      <a href="#">プライバシーポリシー</a>
-      <a href="#">お問い合わせ</a>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ (SEO: フィーチャードスニペット狙い) -->
-<section class="frame-section faq-section" id="faq">
-  <div class="frame">
-    <div class="section-head">
-      <span class="section-eyebrow">FAQ</span>
-      <h2 class="section-title">よくある質問</h2>
-      <span class="section-divider"></span>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item">
-        <h3 class="faq-q">分蜂とは何ですか？</h3>
-        <p class="faq-a">ミツバチが群れを分けて新しい巣を探す自然現象です。女王蜂と働き蜂の一部が巣を離れ、木の枝や軒下などに一時的に集まります。数時間〜数日で自然に移動するため、攻撃しない限りほとんど危険はありません。</p>
-      </div>
-      <div class="faq-item">
-        <h3 class="faq-q">分蜂を見つけたら危険ですか？</h3>
-        <p class="faq-a">分蜂中のミツバチはお腹いっぱいに蜜を蓄え、守るべき巣もないため非常に温和です。直接触ったり脅かしたりしなければほとんど刺しません。静かに距離をとってHelp Beeへ報告してください。</p>
-      </div>
-      <div class="faq-item">
-        <h3 class="faq-q">報告は無料ですか？</h3>
-        <p class="faq-a">はい、完全無料です。写真と場所を送るだけで1〜2分で完了します。</p>
-      </div>
-      <div class="faq-item">
-        <h3 class="faq-q">養蜂家でなくても使えますか？</h3>
-        <p class="faq-a">もちろんです。「大量のハチを見かけた」「これって分蜂？」と思ったらどなたでもお気軽に報告してください。</p>
-      </div>
-      <div class="faq-item">
-        <h3 class="faq-q">Help Beeは全国対応ですか？</h3>
-        <p class="faq-a">はい、全国どこからでも報告・登録いただけます。分蜂は春〜初夏にかけて全国各地で起こる現象です。</p>
-      </div>
-      <div class="faq-item">
-        <h3 class="faq-q">養蜂家として登録するには？</h3>
-        <p class="faq-a">登録フォームから氏名・活動地域・連絡先を入力するだけです。登録は無料で、地域の分蜂群の入手機会やはちみつ販売ページの掲載などの特典があります。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 9. SNS -->
-<section class="frame-section sns-section">
-  <div class="frame">
-    <span class="section-eyebrow">FOLLOW US</span>
-    <h2 class="section-title" style="font-size: 22px;">お知らせ・最新情報</h2>
-    <div class="sns-buttons">
-      <a href="#" class="sns-btn">𝕏</a>
-      <a href="#" class="sns-btn">@</a>
-      <a href="#" class="sns-btn">📷</a>
-      <a href="#" class="sns-btn">📝</a>
-    </div>
-  </div>
-</section>
-
-<!-- 10. FOOTER -->
-<footer class="footer">
-  <div class="frame">
-    <div class="footer-logo-name">Help Bee</div>
-    <p class="footer-tagline">全国蜜蜂レスキューネットワーク<br>蜂と人の共助の輪を、いっしょに。</p>
-    <h4 class="footer-heading">サービス</h4>
-    <ul class="footer-list">
-      <li><a href="#">分蜂を報告</a></li>
-      <li><a href="#">養蜂家として登録</a></li>
-      <li><a href="#">はちみつポータル</a></li>
-    </ul>
-    <h4 class="footer-heading">運営情報</h4>
-    <ul class="footer-list">
-      <li><a href="#">私たちについて</a></li>
-      <li><a href="#">活動報告</a></li>
-      <li><a href="#">お問い合わせ</a></li>
-    </ul>
-    <h4 class="footer-heading">規約</h4>
-    <ul class="footer-list">
-      <li><a href="#">利用規約</a></li>
-      <li><a href="#">プライバシーポリシー</a></li>
-    </ul>
-    <div class="footer-bottom">
-      <span>© 2026 Help Bee</span>
-      <span>helpbee.jp</span>
-    </div>
-  </div>
-</footer>
-
-<!-- Floating CTA for mobile only (右下に常時表示) -->
-<div class="floating-cta">
-  <a href="#" class="btn">📢 分蜂報告</a>
-</div>
-
-<!-- X (Twitter) widget script -->
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <script>
-  // X timeline loaded → hide fallback. Failed within 5s → keep fallback visible.
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const wrap = document.querySelector('.xfeed-wrap');
-      const fallback = document.getElementById('xfeedFallback');
-      if (!wrap || !fallback) return;
-      const iframe = wrap.querySelector('iframe');
-      if (iframe && iframe.offsetHeight > 100) {
-        // X widget loaded successfully
-        fallback.style.display = 'none';
-      }
-    }, 4500);
-  });
-</script>
+  /* ===== Slideshow ===== */
+  (function() {
+    var slides = [
+      document.getElementById('slide0'),
+      document.getElementById('slide1'),
+      document.getElementById('slide2')
+    ];
+    var dots = document.querySelectorAll('#slideDots button');
+    var cur = 0;
 
-<script>
-  // ============================================
-  // Random flying bees (left↔right, wobbling)
-  // ============================================
-  function spawnBee() {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'bee-wrapper';
-
-    // Random direction (PNG faces LEFT by default)
-    const goesRight = Math.random() > 0.5;
-    wrapper.classList.add(goesRight ? 'dir-right' : 'dir-left');
-
-    // Random Y position
-    const y = (Math.random() * 0.85 + 0.05) * window.innerHeight;
-    wrapper.style.top = y + 'px';
-
-    // Random size (50–90px wide)
-    const size = 50 + Math.random() * 40;
-    wrapper.style.width = size + 'px';
-    wrapper.style.height = size + 'px';
-
-    // Random duration (8–18s)
-    const dur = 8 + Math.random() * 10;
-    wrapper.style.animationDuration = dur + 's';
-
-    // Inner wobble element
-    const inner = document.createElement('div');
-    inner.className = 'bee-inner';
-    if (!goesRight) {
-      inner.classList.add('dir-left', 'wobbling');
+    function goTo(n) {
+      slides[cur].style.opacity = '0';
+      slides[cur].style.zIndex = '1';
+      dots[cur].style.background = 'rgba(255,255,255,0.55)';
+      cur = n;
+      slides[cur].style.opacity = '1';
+      slides[cur].style.zIndex = '2';
+      dots[cur].style.background = '#FFFFFF';
     }
-    const wobbleDur = 0.6 + Math.random() * 0.6;
-    inner.style.animationDuration = wobbleDur + 's';
 
-    // Watercolor bee PNG
-    const img = document.createElement('img');
-    img.src = 'images/hachinowa_bee.png';
-    img.alt = '';
-    img.style.cssText = 'width:100%;height:auto;display:block;';
-
-    inner.appendChild(img);
-    wrapper.appendChild(inner);
-    document.body.appendChild(wrapper);
-
-    setTimeout(() => { if (wrapper.parentNode) wrapper.remove(); }, dur * 1000 + 200);
-  }
-
-  function scheduleBee() {
-    spawnBee();
-    // Next bee in 0.8–3.5 seconds
-    const nextDelay = 800 + Math.random() * 2700;
-    setTimeout(scheduleBee, nextDelay);
-  }
-  // Start spawning bees
-  setTimeout(scheduleBee, 800);
-  // Spawn a couple immediately for instant population
-  spawnBee();
-  setTimeout(spawnBee, 1200);
-  setTimeout(spawnBee, 2400);
-
-
-  // ============================================
-  // Scene auto-cycling (時間経過で背景が変化)
-  // ============================================
-  const SCENE_INTERVAL_MS = 7000;  // 7秒ごとに切り替え
-
-  function cycleScenes(stackId, labelId) {
-    const stack = document.getElementById(stackId);
-    const label = document.getElementById(labelId);
-    if (!stack) return;
-    const layers = stack.querySelectorAll('.scene-layer');
-    if (!layers.length) return;
-    let i = 0;
-    setInterval(() => {
-      layers.forEach((l, idx) => l.classList.toggle('active', idx === ((i + 1) % layers.length)));
-      i = (i + 1) % layers.length;
-      const name = layers[i].getAttribute('data-scene');
-      if (label) label.textContent = (labelId === 'leftSceneName' ? 'いまの背景：' : 'どこでも、') + name + (labelId === 'leftSceneName' ? '' : 'で分蜂は起こる');
-    }, SCENE_INTERVAL_MS);
-  }
-
-  cycleScenes('bgSceneCycle', 'leftSceneName');
-  // Right label updates separately based on the same cycle
-  function syncRightLabel() {
-    const bg = document.getElementById('bgSceneCycle');
-    const rightLabel = document.getElementById('rightSceneName');
-    if (!bg || !rightLabel) return;
-    const observer = new MutationObserver(() => {
-      const active = bg.querySelector('.scene-layer.active');
-      if (active) {
-        const name = active.getAttribute('data-scene');
-        rightLabel.textContent = 'どこでも、' + name + 'で分蜂は起こる';
-      }
+    dots.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        goTo(parseInt(this.getAttribute('data-slide')));
+      });
     });
-    bg.querySelectorAll('.scene-layer').forEach(l => observer.observe(l, { attributes: true, attributeFilter: ['class'] }));
-  }
-  syncRightLabel();
-</script>
 
+    setInterval(function() { goTo((cur + 1) % 3); }, 4500);
+  })();
+
+  /* ===== Flying Bees ===== */
+  (function() {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var field = document.getElementById('beeField');
+    var timers = [];
+
+    function spawnBee() {
+      var goesRight = Math.random() > 0.5;
+      var y = (Math.random() * 0.85 + 0.05) * window.innerHeight;
+      var size = 50 + Math.random() * 40;
+      var dur = 8 + Math.random() * 10;
+      var wobbleDur = 0.6 + Math.random() * 0.6;
+
+      var wrapper = document.createElement('div');
+      wrapper.style.cssText =
+        'position:absolute;left:0;top:' + y + 'px;' +
+        'width:' + size + 'px;height:' + size + 'px;' +
+        'pointer-events:none;will-change:transform;' +
+        'animation:' + (goesRight ? 'flyLeftToRight' : 'flyRightToLeft') +
+        ' ' + dur + 's linear forwards;';
+
+      var inner = document.createElement('div');
+      // PNG faces LEFT → flip when going right so it faces forward
+      inner.style.cssText =
+        'width:100%;height:100%;will-change:transform;' +
+        'animation:' + (goesRight ? 'beeWobbleLeft' : 'beeWobble') +
+        ' ' + wobbleDur + 's ease-in-out infinite alternate;';
+
+      var img = document.createElement('img');
+      img.src = 'images/hachinowa_bee.png';
+      img.alt = '';
+      img.style.cssText = 'width:100%;height:auto;display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.18));';
+
+      inner.appendChild(img);
+      wrapper.appendChild(inner);
+      field.appendChild(wrapper);
+
+      var t = setTimeout(function() {
+        if (wrapper.parentNode) wrapper.remove();
+      }, dur * 1000 + 200);
+      timers.push(t);
+    }
+
+    function scheduleBee() {
+      spawnBee();
+      var delay = 800 + Math.random() * 2700;
+      timers.push(setTimeout(scheduleBee, delay));
+    }
+
+    var probe = new Image();
+    probe.onload = function() {
+      scheduleBee();
+      spawnBee();
+      timers.push(setTimeout(spawnBee, 1200));
+      timers.push(setTimeout(spawnBee, 2400));
+    };
+    probe.src = 'images/hachinowa_bee.png';
+  })();
+</script>
 </body>
 </html>
