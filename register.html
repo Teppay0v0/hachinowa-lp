@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>養蜂家 事前登録 | Help Bee</title>
+  <meta name="description" content="Help Beeの養蜂家パートナーとして事前登録する。分蜂情報をLINEでリアルタイム受信。">
+  <meta name="robots" content="noindex">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+      font-weight: 500;
+      color: #38352C;
+      line-height: 1.85;
+      background: #EFE9DA;
+      min-height: 100vh;
+    }
+
+    /* ===== Fixed background ===== */
+    .bg-fixed {
+      position: fixed;
+      inset: 0;
+      background: url('images/scene.jpg') center center / cover no-repeat;
+      z-index: 0;
+    }
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(239,233,218,0.45);
+      z-index: 1;
+    }
+
+    /* ===== Header ===== */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 56px;
+      background: rgba(252,247,235,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(184,134,47,0.15);
+    }
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: #38352C;
+      text-decoration: none;
+    }
+    .header-logo img {
+      height: 28px;
+      width: auto;
+    }
+    .header-back {
+      font-size: 12px;
+      color: #B8862F;
+      letter-spacing: .08em;
+      text-decoration: none;
+    }
+    .header-back:hover { text-decoration: underline; }
+
+    /* ===== Main column ===== */
+    main {
+      position: relative;
+      z-index: 10;
+      max-width: 608px;
+      margin: 0 auto;
+      padding: 88px 0 80px;
+    }
+
+    .card {
+      background: rgba(252,247,235,0.975);
+      border: 1px solid rgba(184,134,47,0.18);
+      border-radius: 2px;
+      padding: 48px 40px;
+      margin: 0 16px;
+    }
+
+    /* ===== Page header ===== */
+    .page-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: .2em;
+      color: #B8862F;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .page-title {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.5;
+      margin-bottom: 16px;
+      letter-spacing: .03em;
+    }
+    .page-lead {
+      font-size: 13.5px;
+      color: #5a5648;
+      line-height: 2;
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(184,134,47,0.2);
+    }
+
+    /* ===== Form ===== */
+    .form-group {
+      margin-bottom: 28px;
+    }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      margin-bottom: 6px;
+      color: #38352C;
+    }
+    .form-label .required {
+      font-size: 10px;
+      color: #B8862F;
+      font-weight: 400;
+      letter-spacing: .06em;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .form-label .optional {
+      font-size: 10px;
+      color: #aaa;
+      font-weight: 400;
+      letter-spacing: .06em;
+      margin-left: 6px;
+    }
+    .form-note {
+      font-size: 11.5px;
+      color: #8a8278;
+      margin-bottom: 8px;
+      line-height: 1.7;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #38352C;
+      background: #fff;
+      border: 1px solid rgba(184,134,47,0.3);
+      border-radius: 2px;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color .2s;
+      -webkit-appearance: none;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: #B8862F;
+      box-shadow: 0 0 0 3px rgba(184,134,47,0.08);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+      line-height: 1.8;
+    }
+
+    /* checkboxes & radios */
+    .check-group, .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .check-row, .radio-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .check-row input, .radio-row input {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      accent-color: #B8862F;
+      cursor: pointer;
+    }
+
+    /* divider */
+    .form-divider {
+      border: none;
+      border-top: 1px solid rgba(184,134,47,0.15);
+      margin: 36px 0;
+    }
+    .form-section-title {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      color: #B8862F;
+      margin-bottom: 24px;
+    }
+
+    /* submit */
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: #B8862F;
+      color: #fff;
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      margin-top: 8px;
+    }
+    .btn-submit:hover { background: #9a6e20; }
+    .btn-submit:active { transform: scale(.99); }
+
+    .form-privacy {
+      font-size: 11px;
+      color: #aaa;
+      text-align: center;
+      margin-top: 14px;
+      line-height: 1.8;
+    }
+
+    /* success message */
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .success-msg .icon { font-size: 40px; margin-bottom: 16px; }
+    .success-msg h2 {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+    .success-msg p { font-size: 14px; color: #5a5648; line-height: 2; }
+
+    /* footer */
+    footer {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 32px 16px;
+      font-size: 11px;
+      color: rgba(56,53,44,0.4);
+      letter-spacing: .08em;
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 36px 24px; margin: 0 12px; }
+      .page-title { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-fixed"></div>
+<div class="bg-overlay"></div>
+
+<header>
+  <a href="index.html" class="header-logo">
+    <img src="images/helpbee_wordmark.svg" alt="Help Bee">
+  </a>
+  <a href="index.html" class="header-back">← トップへ戻る</a>
+</header>
+
+<main>
+  <div class="card">
+
+    <div class="page-eyebrow">Beekeeper Registration</div>
+    <h1 class="page-title">養蜂家 事前登録フォーム</h1>
+    <p class="page-lead">
+      Help Beeのパートナー養蜂家として事前登録する方はこちらからどうぞ。<br>
+      分蜂情報はLINEにリアルタイムで届きます。登録は無料です。<br>
+      ※現在はクラウドファンディング準備中のため、サービス開始後に正式な登録のご案内を送らせていただきます。
+    </p>
+
+    <form id="register-form" action="https://formspree.io/f/mwvjrykp" method="POST">
+
+      <!-- 基本情報 -->
+      <div class="form-section-title">基本情報</div>
+
+      <div class="form-group">
+        <label class="form-label" for="name">
+          お名前・屋号<span class="required">必須</span>
+        </label>
+        <input type="text" id="name" name="name" placeholder="例：吉田エマ／かえるやはちみつ" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="address">
+          拠点（市区町村まで）<span class="required">必須</span>
+        </label>
+        <p class="form-note">活動エリアの算出に使用します。番地・建物名の入力は不要です。</p>
+        <input type="text" id="address" name="address" placeholder="例：北海道札幌市西区" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="tel">
+          電話番号<span class="required">必須</span>
+        </label>
+        <input type="tel" id="tel" name="tel" placeholder="例：090-0000-0000" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="line_id">
+          LINE ID<span class="required">必須</span>
+        </label>
+        <p class="form-note">分蜂情報の通知はLINEでお送りします。LINEアプリ → プロフィール → 「ID」欄の文字列を入力してください。</p>
+        <input type="text" id="line_id" name="line_id" placeholder="例：@kaeruyahoney" required>
+      </div>
+
+      <hr class="form-divider">
+
+      <!-- 活動情報 -->
+      <div class="form-section-title">活動情報</div>
+
+      <div class="form-group">
+        <label class="form-label" for="area">
+          活動可能範囲<span class="required">必須</span>
+        </label>
+        <p class="form-note">拠点からの距離、または対応可能な市区町村名をお書きください。</p>
+        <input type="text" id="area" name="area" placeholder="例：拠点から半径15km以内、または札幌市全域" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="hours">
+          対応可能な時間帯<span class="required">必須</span>
+        </label>
+        <input type="text" id="hours" name="hours" placeholder="例：平日 9〜17時、土日も対応可" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          回収可能なミツバチの種類<span class="required">必須</span>
+        </label>
+        <div class="check-group">
+          <label class="check-row">
+            <input type="checkbox" name="bee_type" value="セイヨウミツバチ">
+            セイヨウミツバチ
+          </label>
+          <label class="check-row">
+            <input type="checkbox" name="bee_type" value="ニホンミツバチ">
+            ニホンミツバチ
+          </label>
+          <label class="check-row">
+            <input type="checkbox" name="bee_type" value="どちらでも対応可">
+            どちらでも対応可
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          費用の有無<span class="required">必須</span>
+        </label>
+        <p class="form-note">発見者の方にお伝えする情報です。</p>
+        <div class="radio-group">
+          <label class="radio-row">
+            <input type="radio" name="fee" value="無料（費用なし）" required>
+            無料（費用なし）
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="fee" value="有料（要相談）">
+            有料（要相談）
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="fee" value="状況による">
+            状況による
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          高所作業（2階以上・屋根・ベランダ）への対応<span class="required">必須</span>
+        </label>
+        <div class="radio-group">
+          <label class="radio-row">
+            <input type="radio" name="high_place" value="対応可" required>
+            対応可
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="high_place" value="要相談">
+            要相談
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="high_place" value="対応不可">
+            対応不可
+          </label>
+        </div>
+      </div>
+
+      <hr class="form-divider">
+
+      <!-- PR情報 -->
+      <div class="form-section-title">プロフィール情報（任意）</div>
+
+      <div class="form-group">
+        <label class="form-label" for="shop_url">
+          はちみつ販売URL<span class="optional">任意</span>
+        </label>
+        <input type="url" id="shop_url" name="shop_url" placeholder="例：https://kaeruyahoney.base.shop">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="pr">
+          一言PR<span class="optional">任意</span>
+        </label>
+        <p class="form-note">プロフィールページに掲載します。活動エリアの特徴や、得意なことなどをどうぞ。</p>
+        <textarea id="pr" name="pr" placeholder="例：札幌市内であれば当日対応できます。ニホンミツバチの自然巣を10年以上観察してきました。"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          顔写真・活動写真<span class="optional">任意・後日でも可</span>
+        </label>
+        <p class="form-note">登録後、Help Bee担当（エマ）からLINEでご連絡します。そのタイミングでお送りいただければ大丈夫です。</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="message">
+          その他・ご連絡事項<span class="optional">任意</span>
+        </label>
+        <textarea id="message" name="message" placeholder="ご質問・ご要望などあればお気軽にどうぞ。"></textarea>
+      </div>
+
+      <!-- hidden fields -->
+      <input type="hidden" name="_subject" value="【Help Bee】養蜂家 事前登録がありました">
+      <input type="text" name="_gotcha" style="display:none">
+
+      <button type="submit" class="btn-submit">事前登録する</button>
+      <p class="form-privacy">送信内容はHelp Bee運営（合同会社HANABI）が受け取ります。<br>いただいた情報はサービス運営以外の目的には使用しません。</p>
+
+    </form>
+
+    <!-- 送信完了メッセージ（Formspree リダイレクト非使用の場合） -->
+    <div class="success-msg" id="success-msg">
+      <div class="icon">🐝</div>
+      <h2>ありがとうございます</h2>
+      <p>
+        事前登録を受け付けました。<br>
+        サービス開始前に、エマよりLINEにてご連絡いたします。<br>
+        引き続きよろしくお願いします。
+      </p>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  © 2025 Help Bee（合同会社HANABI）
+</footer>
+
+<script>
+  // Formspree AJAX送信（ページ遷移なし）
+  const form = document.getElementById('register-form');
+  const successMsg = document.getElementById('success-msg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('.btn-submit');
+    btn.textContent = '送信中...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        form.style.display = 'none';
+        successMsg.style.display = 'block';
+      } else {
+        btn.textContent = '送信に失敗しました。もう一度お試しください。';
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = '送信に失敗しました。もう一度お試しください。';
+      btn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
