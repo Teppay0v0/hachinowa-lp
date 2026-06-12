@@ -391,9 +391,12 @@
             有料（要相談）
           </label>
           <label class="radio-row">
-            <input type="radio" name="fee" value="状況による">
+            <input type="radio" name="fee" value="状況による" id="fee-conditional">
             状況による
           </label>
+        </div>
+        <div id="fee-detail-wrap" style="display:none; margin-top:12px;">
+          <input type="text" id="fee_detail" name="fee_detail" placeholder="例：高所作業の場合は実費をいただく場合があります">
         </div>
       </div>
 
@@ -479,6 +482,14 @@
 </footer>
 
 <script>
+  // 「状況による」選択時に補足欄を表示
+  document.querySelectorAll('input[name="fee"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const wrap = document.getElementById('fee-detail-wrap');
+      wrap.style.display = radio.value === '状況による' && radio.checked ? 'block' : 'none';
+    });
+  });
+
   // Formspree AJAX送信（ページ遷移なし）
   const form = document.getElementById('register-form');
   const successMsg = document.getElementById('success-msg');
