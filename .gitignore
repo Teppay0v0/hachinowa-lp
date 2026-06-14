@@ -3,3 +3,6 @@
 node_modules/
 .vscode/
 .idea/
+
+# GAS（内部用、公開しない）
+HelpBee_GAS_*

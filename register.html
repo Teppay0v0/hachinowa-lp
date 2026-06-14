@@ -301,7 +301,7 @@
       ※現在はクラウドファンディング準備中のため、サービス開始後に正式な登録のご案内を送らせていただきます。
     </p>
 
-    <form id="register-form" action="https://formsubmit.co/helpbee.info@gmail.com" method="POST">
+    <form id="register-form" action="https://script.google.com/macros/s/AKfycbwjRATJbmK6KAs6a5FAHRDDIwh7Q4VsyQFY-9CncWLdrJ75EERLKfdz7dbRcb3vfHV_/exec" method="POST" target="gas-iframe">
 
       <!-- 基本情報 -->
       <div class="form-section-title">基本情報</div>
@@ -501,7 +501,7 @@
       <h2>ありがとうございます</h2>
       <p>
         事前登録を受け付けました。<br>
-        サービス開始前に、エマよりLINEにてご連絡いたします。<br>
+        サービス開始前に、担当よりLINEにてご連絡いたします。<br>
         引き続きよろしくお願いします。
       </p>
     </div>
@@ -530,36 +530,37 @@
     });
   });
 
-  // Formspree AJAX送信（ページ遷移なし）
+  // GAS Web App 送信（iframe経由・302リダイレクトに耐える）
   const form = document.getElementById('register-form');
   const successMsg = document.getElementById('success-msg');
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  form.addEventListener('submit', (e) => {
     const btn = form.querySelector('.btn-submit');
     btn.textContent = '送信中...';
     btn.disabled = true;
 
-    try {
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
+    const iframe = document.getElementById('gas-iframe');
+    let done = false;
 
-      if (res.ok) {
-        form.style.display = 'none';
-        successMsg.style.display = 'block';
-      } else {
-        btn.textContent = '送信に失敗しました。もう一度お試しください。';
-        btn.disabled = false;
-      }
-    } catch {
+    const timeoutId = setTimeout(() => {
+      if (done) return;
+      done = true;
       btn.textContent = '送信に失敗しました。もう一度お試しください。';
       btn.disabled = false;
-    }
+    }, 30000);
+
+    iframe.onload = () => {
+      if (done) return;
+      done = true;
+      clearTimeout(timeoutId);
+      form.style.display = 'none';
+      successMsg.style.display = 'block';
+    };
+
+    // preventDefault せず、ネイティブのform送信で iframe へ POST
   });
 </script>
 
+<iframe name="gas-iframe" id="gas-iframe" style="display:none" aria-hidden="true"></iframe>
 </body>
 </html>
