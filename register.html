@@ -447,6 +447,38 @@
         <p class="form-note">登録後、担当の吉田よりLINEでご連絡します。そのタイミングでお送りいただければ大丈夫です。</p>
       </div>
 
+      <hr class="form-divider">
+
+      <!-- クラファン協力 -->
+      <div class="form-section-title">クラウドファンディングへのご協力について</div>
+
+      <div class="form-group">
+        <p class="form-note" style="margin-bottom:14px;">
+          Help Beeは現在、クラウドファンディングを準備中です。支援者へのお礼として「各地の養蜂家さんのはちみつ」をリターン品にご提供いただける方を募っています。<br>
+          ご協力いただける方には、Help Beeサイト内での<strong>養蜂家紹介ページへの掲載</strong>と、<strong>はちみつテイスティング評価コメント</strong>をお付けします。
+        </p>
+        <label class="form-label">
+          はちみつのご提供へのご協力（1kg程度）<span class="optional">任意</span>
+        </label>
+        <div class="radio-group">
+          <label class="radio-row">
+            <input type="radio" name="honey_support" value="協力できる" id="honey-yes">
+            協力できる
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="honey_support" value="内容を聞いてから検討したい">
+            内容を聞いてから検討したい
+          </label>
+          <label class="radio-row">
+            <input type="radio" name="honey_support" value="今回は見送りたい">
+            今回は見送りたい
+          </label>
+        </div>
+        <div id="honey-detail-wrap" style="display:none; margin-top:12px;">
+          <input type="text" name="honey_detail" placeholder="例：クローバー蜜・百花蜜など。提供できる量や時期があればお書きください">
+        </div>
+      </div>
+
       <div class="form-group">
         <label class="form-label" for="message">
           その他・ご連絡事項<span class="optional">任意</span>
@@ -487,6 +519,14 @@
     radio.addEventListener('change', () => {
       const wrap = document.getElementById('fee-detail-wrap');
       wrap.style.display = radio.value === '状況による' && radio.checked ? 'block' : 'none';
+    });
+  });
+
+  // 「協力できる」選択時にはちみつ詳細欄を表示
+  document.querySelectorAll('input[name="honey_support"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const wrap = document.getElementById('honey-detail-wrap');
+      wrap.style.display = radio.value === '協力できる' && radio.checked ? 'block' : 'none';
     });
   });
 
