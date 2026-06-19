@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help Bee — クラファン準備 チェックリスト</title>
+  <meta name="robots" content="noindex">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      background: #EFE9DA;
+      color: #38352C;
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    /* header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(252,247,235,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(184,134,47,0.15);
+      padding: 16px 20px;
+    }
+
+    .header-content {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-content h1 {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: .06em;
+    }
+
+    .header-content .badge {
+      display: inline-block;
+      background: #B8862F;
+      color: #fff;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      letter-spacing: .08em;
+      font-weight: 700;
+    }
+
+    .progress-bar {
+      margin-left: auto;
+      font-size: 12px;
+      color: #888;
+      font-weight: 500;
+    }
+
+    /* main */
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* section */
+    .task-section {
+      background: rgba(252,247,235,0.9);
+      border: 1px solid rgba(184,134,47,0.18);
+      border-radius: 4px;
+      padding: 28px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .task-section.completed {
+      opacity: 0.75;
+      background: rgba(252,247,235,0.6);
+    }
+
+    .task-section h2 {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: #B8862F;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .task-section .deadline {
+      font-size: 11px;
+      color: #aaa;
+      letter-spacing: .08em;
+      margin-bottom: 14px;
+    }
+
+    /* checklist */
+    .task-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px;
+      border-radius: 2px;
+      transition: background .2s;
+    }
+
+    .task-item:hover {
+      background: rgba(184,134,47,0.08);
+    }
+
+    .task-item.done {
+      opacity: 0.6;
+    }
+
+    .task-item.done label {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      margin-top: 2px;
+      accent-color: #B8862F;
+      cursor: pointer;
+    }
+
+    label {
+      flex: 1;
+      cursor: pointer;
+      font-size: 13.5px;
+      line-height: 1.7;
+    }
+
+    .task-note {
+      font-size: 11px;
+      color: #999;
+      margin-top: 4px;
+      line-height: 1.6;
+    }
+
+    /* progress stats */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 32px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(184,134,47,0.2);
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Zen Old Mincho', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #B8862F;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #888;
+      letter-spacing: .08em;
+      margin-top: 4px;
+    }
+
+    /* footer */
+    footer {
+      text-align: center;
+      padding: 24px 20px;
+      font-size: 11px;
+      color: rgba(56,53,44,0.4);
+      letter-spacing: .08em;
+    }
+
+    @media (max-width: 480px) {
+      .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      .progress-bar {
+        margin-left: 0;
+      }
+      .task-section {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <h1>🐝 Help Bee クラファン準備</h1>
+    <span class="badge">6/20 デッドライン</span>
+    <div class="progress-bar">
+      <span id="progress-text">0/24 完了</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- エマ確認待ち -->
+  <section class="task-section" id="section-emma">
+    <h2>📋 エマさん確認待ち（最優先）</h2>
+    <div class="deadline">期限: 6月20日（木）</div>
+    <ul class="task-list">
+      <li class="task-item">
+        <input type="checkbox" id="emma-1" class="task-check">
+        <div style="flex:1;">
+          <label for="emma-1">代表紹介文の書き直し（Chapter 5）</label>
+          <div class="task-note">「4年かけて申請が通った」「初めて分蜂に出会った時」など原体験エピソード</div>
+        </div>
+      </li>
+      <li class="task-item">
+        <input type="checkbox" id="emma-2" class="task-check">
+        <div style="flex:1;">
+          <label for="emma-2">はちみつリターンの確定</label>
+          <div class="task-note">品種、量（150g×？本）、在庫上限、発送予定時期</div>
+        </div>
+      </li>
+      <li class="task-item">
+        <input type="checkbox" id="emma-3" class="task-check">
+        <div style="flex:1;">
+          <label for="emma-3">採蜜体験の条件確定</label>
+          <div class="task-note">受入可能人数（現在上限10名）、実施予定時期</div>
+        </div>
+      </li>
+      <li class="task-item">
+        <input type="checkbox" id="emma-4" class="task-check">
+        <div style="flex:1;">
+          <label for="emma-4">写真4枚の準備</label>
+          <div class="task-note">①顔写真（笑顔） ②分蜂の写真 ③保護している写真（防護服・脚立） ④はちみつ</div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- てっぺい実施 -->
+  <section class="task-section" id="section-teppei">
+    <h2>🎯 てっぺいさん実施（6/25まで）</h2>
+    <div class="deadline">期限: 6月25日（火）</div>
+    <ul class="task-list">
+      <li class="task-item">
+        <input type="checkbox" id="teppei-1" class="task-check">
+        <div style="flex:1;">
+          <label for="teppei-1">任意団体「Help Bee」規約ひな形作成</label>
+          <div class="task-note">利用規約・プライバシーポリシー。Word/Google Docsで</div>
+        </div>
+      </li>
+      <li class="task-item">
+        <input type="checkbox" id="teppei-2" class="task-check">
+        <div style="flex:1;">
+          <label for="teppei-2">7/11・7/25イベント向けチラシ制作</label>
+          <div class="task-note">デザイン・データ出力</div>
+        </div>
+      </li>
+      <li class="task-item">
+        <input type="checkbox" id="teppei-3" class="task-check">
+        <div style="flex:1;">
+          <label for="teppei-3">Google Search Consoleにサイトマップ登録</label>
+          <div class="task-note">SEO対策</div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Readyfor -->
+  <section class="task-section" id="section-readyfor">
+    <h2>💰 Readyfor ページ完成（6/末まで）</h2>
+    <div class="deadline">期限: 6月30日（日）</div>
+    <ul class="task-list">
+      <li class="task-item">
+        <input type="checkbox" id="readyfor-1" class="task-check">
+        <div style="flex:1;">
+          <label for="readyfor-1">プロジェクト概要文の確定</label>
+          <div class="task-note">400字。エマさんのひとことを1〜2文追加</div>
+        </div>
+      </li>
+      <li class="task-item">
+        <input type="checkbox" id="readyfor-2" class="task-check">
+        <div style="flex:1;">
+          <label for="readyfor-2">本文ストーリー（全7章）の最終チェック</label>
+          <div class="task-note">特にChapter 5（代表より）はエマさんの言葉で</div>
+        </div>
+      </li>
+      <li class="task-item">
+        <input type="checkbox" id="readyfor-3" class="task-check">
+        <div style="flex:1;">
+          <label for="readyfor-3">メインビジュアル画像の設定</label>
+          <div class="task-note">サムネイル・OGP。bunpo-rescue.jpg か bee-watercolor.jpg</div>
+        </div>
+      </li>
+      <li class="task-item">
+        <input type="checkbox" id="readyfor-4" class="task-check">
+        <div style="flex:1;">
+          <label for="readyfor-4">本文中に画像を6〜8枚挿入</label>
+          <div class="task-note">bunpo-1/2/3.jpg、bunpo-rescue.jpg など</div>
+        </div>
+      </li>
+      <li class="task-item">
+        <input type="checkbox" id="readyfor-5" class="task-check">
+        <div style="flex:1;">
+          <label for="readyfor-5">「現在●名の養蜂家が参加予定」を記載</label>
+          <div class="task-note">久保田直行／はなうた（埼玉）、ビーハイブジャパン（東京）、吉田エマ（北海道）</div>
+        </div>
+      </li>
+      <li class="task-item">
+        <input type="checkbox" id="readyfor-6" class="task-check">
+        <div style="flex:1;">
+          <label for="readyfor-6">リターン内容の最終確認</label>
+          <div class="task-note">はちみつの品種・量がエマさんから確定したら記載</div>
+        </div>
+      </li>
+      <li class="task-item">
+        <input type="checkbox" id="readyfor-7" class="task-check">
+        <div style="flex:1;">
+          <label for="readyfor-7">プロジェクト申請＆公開リクエスト</label>
+          <div class="task-note">Readyfor担当からのフィードバック対応</div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 本リリース準備 -->
+  <section class="task-section" id="section-launch">
+    <h2>🚀 本リリース準備（7/1まで）</h2>
+    <div class="deadline">期限: 7月1日（月）</div>
+    <ul class="task-list">
+      <li class="task-item">
+        <input type="checkbox" id="launch-1" class="task-check">
+        <div style="flex:1;">
+          <label for="launch-1">分蜂報告用サイト（ユーザー側）の基本設計</label>
+          <div class="task-note">写真アップロード、地図ピン機能のWireframe</div>
+        </div>
+      </li>
+      <li class="task-item">
+        <input type="checkbox" id="launch-2" class="task-check">
+        <div style="flex:1;">
+          <label for="launch-2">養蜂家管理ダッシュボード設計</label>
+          <div class="task-note">通知管理、エリア登録編集</div>
+        </div>
+      </li>
+      <li class="task-item">
+        <input type="checkbox" id="launch-3" class="task-check">
+        <div style="flex:1;">
+          <label for="launch-3">LINE Messaging API 再設定（本番向け）</label>
+          <div class="task-note">当日テスト済み。本当の通知テストを実施</div>
+        </div>
+      </li>
+      <li class="task-item">
+        <input type="checkbox" id="launch-4" class="task-check">
+        <div style="flex:1;">
+          <label for="launch-4">X / Threads モニタリング自動化の再検討</label>
+          <div class="task-note">twscrape / Google Alerts / ネイティブ検索通知の組み合わせ</div>
+        </div>
+      </li>
+      <li class="task-item">
+        <input type="checkbox" id="launch-5" class="task-check">
+        <div style="flex:1;">
+          <label for="launch-5">7月11日イベント向け「分蜂報告フロー」のデモ動画</label>
+          <div class="task-note">ユーザー・養蜂家それぞれの操作画面を30秒動画で</div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 統計 -->
+  <section class="stats">
+    <div class="stat">
+      <div class="stat-num" id="completed-count">0</div>
+      <div class="stat-label">完了</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="remaining-count">24</div>
+      <div class="stat-label">残作業</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="progress-percent">0%</div>
+      <div class="stat-label">進捗率</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Help Bee クラウドファンディング準備チェックリスト<br>
+  更新状況はこのページに保存されます（ローカルストレージ）
+</footer>
+
+<script>
+  const checkboxes = document.querySelectorAll('.task-check');
+  const storageKey = 'helpbee-tasks-progress';
+
+  // ページ読み込み時に状態を復元
+  function loadProgress() {
+    const saved = localStorage.getItem(storageKey);
+    if (saved) {
+      const checked = JSON.parse(saved);
+      checkboxes.forEach(cb => {
+        if (checked.includes(cb.id)) {
+          cb.checked = true;
+        }
+      });
+    }
+    updateProgress();
+  }
+
+  // チェック変更時に状態を保存
+  function saveProgress() {
+    const checked = Array.from(checkboxes)
+      .filter(cb => cb.checked)
+      .map(cb => cb.id);
+    localStorage.setItem(storageKey, JSON.stringify(checked));
+    updateProgress();
+  }
+
+  // 進捗を更新
+  function updateProgress() {
+    const total = checkboxes.length;
+    const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
+    const percent = Math.round((completed / total) * 100);
+
+    document.getElementById('completed-count').textContent = completed;
+    document.getElementById('remaining-count').textContent = total - completed;
+    document.getElementById('progress-percent').textContent = percent + '%';
+    document.getElementById('progress-text').textContent = `${completed}/${total} 完了`;
+
+    // セクションの完了状態を反映
+    document.querySelectorAll('.task-section').forEach(section => {
+      const items = section.querySelectorAll('.task-item');
+      const completedItems = Array.from(items).filter(item =>
+        item.querySelector('input[type="checkbox"]').checked
+      );
+      if (completedItems.length === items.length && items.length > 0) {
+        section.classList.add('completed');
+      } else {
+        section.classList.remove('completed');
+      }
+
+      // 各アイテムの完了状態
+      items.forEach(item => {
+        const cb = item.querySelector('input[type="checkbox"]');
+        if (cb.checked) {
+          item.classList.add('done');
+        } else {
+          item.classList.remove('done');
+        }
+      });
+    });
+  }
+
+  // イベント設定
+  checkboxes.forEach(cb => {
+    cb.addEventListener('change', saveProgress);
+  });
+
+  // 初期化
+  loadProgress();
+</script>
+
+</body>
+</html>
