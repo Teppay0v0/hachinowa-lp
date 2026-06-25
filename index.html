@@ -932,9 +932,21 @@
       font-size: 12px;
       color: #A8A290;
     }
-    .footer-bottom {
+    .footer-operator {
       border-top: 1px solid #50503F;
       padding-top: 16px;
+      margin-bottom: 12px;
+      font-size: 11px;
+      color: #7E7C68;
+      line-height: 1.9;
+    }
+    .footer-operator a {
+      color: #A89060;
+      text-decoration: underline;
+    }
+    .footer-bottom {
+      border-top: 1px solid #50503F;
+      padding-top: 12px;
       display: flex;
       justify-content: space-between;
       font-size: 10px;
@@ -977,7 +989,14 @@
         "founder": {
           "@type": "Person",
           "name": "吉田エマ",
-          "jobTitle": "はちみつマイスター"
+          "jobTitle": "養蜂家・はちみつマイスター",
+          "description": "北海道札幌市を拠点に複数箇所でミツバチを育てる養蜂家。はちみつマイスター資格保有。「かえるやはちみつ」代表。",
+          "knowsAbout": ["ミツバチ", "分蜂", "養蜂", "はちみつ", "生態系保護"]
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "email": "helpbee.info@gmail.com",
+          "contactType": "customer support"
         },
         "knowsAbout": ["ミツバチ", "分蜂", "養蜂", "蜂蜜", "生態系保護", "分蜂マッチング"]
       },
@@ -988,6 +1007,7 @@
         "name": "Help Bee",
         "description": "ミツバチの分蜂を駆除ではなく保護へつなぐ全国マッチングプラットフォーム",
         "inLanguage": "ja",
+        "dateModified": "2026-06-25",
         "publisher": {
           "@id": "https://helpbee.jp/#organization"
         }
@@ -1390,7 +1410,8 @@
       <div class="eyebrow">About us</div>
       <h2 class="mission-h2">駆除ではなく、<br><span class="accent">保護</span>を選べる社会へ。</h2>
       <p class="mission-body">
-        Help Bee は、札幌で立ち上げた市民発の取り組みです。<br>
+        Help Bee は、養蜂家・吉田エマが立ち上げた市民発の取り組みです。<br>
+        北海道札幌市を拠点に宮の森・北の沢・玉翠園屋上など複数箇所でミツバチを育て、毎年春の「分蜂戦争」を間近で見てきた経験から生まれました。<br>
         小さく始めて、全国へ。
       </p>
       <div class="mission-links">
@@ -1458,7 +1479,7 @@
           <h4 class="footer-col-head">Service</h4>
           <ul class="footer-col-list">
             <li><a href="#">分蜂を報告</a></li>
-            <li><a href="#">養蜂家として登録</a></li>
+            <li><a href="register.html">養蜂家として登録</a></li>
             <li><a href="#">はちみつポータル</a></li>
           </ul>
         </div>
@@ -1471,8 +1492,13 @@
           </ul>
         </div>
       </div>
+      <div class="footer-operator">
+        <p>運営：Help Bee（任意団体）</p>
+        <p>代表：吉田エマ（はちみつマイスター）</p>
+        <p>お問い合わせ：<a href="mailto:helpbee.info@gmail.com">helpbee.info@gmail.com</a></p>
+      </div>
       <div class="footer-bottom">
-        <span>© 2026 Help Bee</span>
+        <span>© 2026 Help Bee（任意団体）</span>
         <span>helpbee.jp</span>
       </div>
     </footer>
