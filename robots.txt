@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /register
+Disallow: /tasks
+Disallow: /paste-content
+Disallow: /crowdfunding-plan
+Disallow: /flyer
 
 Sitemap: https://helpbee.jp/sitemap.xml
